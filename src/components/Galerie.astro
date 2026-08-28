@@ -1,0 +1,208 @@
+---
+import { Image } from 'astro:assets';
+import { type Lang, t } from '../content/i18n';
+import Icon from './Icon.astro';
+
+import aerianBazine from '../assets/photos/aerian-bazine.jpg';
+import aerianTermal from '../assets/photos/aerian-termal.jpg';
+import bazinTratament from '../assets/photos/bazin-tratament.jpg';
+import apaTermala from '../assets/photos/apa-termala.jpg';
+import relaxare from '../assets/photos/relaxare.jpg';
+import sport from '../assets/photos/sport.jpg';
+import gastronomie from '../assets/photos/gastronomie.jpg';
+import hero from '../assets/photos/hero.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const POZE = [
+  { src: hero, mare: true, ro: 'Vedere aeriană a întregului complex, cu bazinele și grădina', hu: 'Légi felvétel az egész komplexumról, a medencékkel és a kerttel' },
+  { src: bazinTratament, ro: 'Oameni în bazinul de tratament, la apus', hu: 'Fürdőzők a gyógymedencében, naplementekor' },
+  { src: apaTermala, ro: 'Jeturi de apă termală care se varsă în bazin', hu: 'Termálvíz-sugarak ömlenek a medencébe' },
+  { src: aerianBazine, ro: 'Bazinul de înot de 30 de metri, văzut de sus', hu: 'A 30 méteres úszómedence felülnézetből' },
+  { src: relaxare, ro: 'Femeie citind o carte pe marginea bazinului', hu: 'Nő könyvet olvas a medence partján' },
+  { src: gastronomie, ro: 'Kürtőskalács proaspăt, în fața bazinului', hu: 'Frissen sült kürtőskalács a medence előtt' },
+  { src: aerianTermal, ro: 'Bazinele cu apă termală și clădirea barului', hu: 'A termálvizes medencék és a bár épülete' },
+  { src: sport, ro: 'Tineri jucând fotbal pe gazon', hu: 'Fiatalok fociznak a gyepen' },
+] as const;
+
+const li = lang === 'ro' ? 'ro' : 'hu';
+---
+<section class="section section--alt" id="galerie">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow">05</span>
+      <h2 class="section__title">{c.galerie.titlu}</h2>
+      <p class="section__intro">{c.galerie.intro}</p>
+    </div>
+
+    <ul class="gal" data-gallery>
+      {POZE.map((p, i) => (
+        <li class:list={['gal__i', { 'gal__i--mare': p.mare }]} data-reveal style={`--reveal-delay:${Math.min(i, 5) * 70}ms`}>
+          <button class="gal__b" type="button" data-gal-open={i} aria-label={c.galerie.deschide}>
+            <Image
+              src={p.src}
+              alt={p[li]}
+              widths={[320, 640, 1000]}
+              sizes="(min-width: 900px) 30vw, (min-width: 600px) 45vw, 92vw"
+              quality={78}
+              loading="lazy"
+              class="gal__img"
+            />
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {/* Lightbox-ul primeste sursele mari si textele din markup, ca sa nu duplicam datele in JS. */}
+  <div
+    class="lb"
+    data-lightbox
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label={c.galerie.titlu}
+  >
+    <div class="lb__scrim" data-lb-close></div>
+
+    <button class="lb__x" type="button" data-lb-close aria-label={c.galerie.inchide}>
+      <Icon name="inchide" size={22} />
+    </button>
+    <button class="lb__nav lb__nav--p" type="button" data-lb-prev aria-label={c.galerie.anterior}>
+      <Icon name="chevron" size={26} />
+    </button>
+    <button class="lb__nav lb__nav--n" type="button" data-lb-next aria-label={c.galerie.urmator}>
+      <Icon name="chevron" size={26} />
+    </button>
+
+    <figure class="lb__fig">
+      <img class="lb__img" data-lb-img alt="" />
+      <figcaption class="lb__cap">
+        <span data-lb-cap></span>
+        <span class="lb__count" data-lb-count></span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <script
+    type="application/json"
+    data-gallery-data
+    set:html={JSON.stringify({
+      contor: c.galerie.contor,
+      poze: POZE.map((p) => ({ alt: p[li] })),
+    })}
+  />
+</section>
+
+<style>
+  .gal {
+    display: grid;
+    gap: clamp(.6rem, 1.6vw, 1rem);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gal__i { min-width: 0; }
+  .gal__b {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: var(--surface-2);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    cursor: zoom-in;
+    box-shadow: var(--shadow-sm);
+  }
+  .gal__img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    transition: transform .55s var(--ease), filter .3s var(--ease);
+  }
+  .gal__b:hover .gal__img { transform: scale(1.05); filter: brightness(1.05); }
+  .gal__i--mare .gal__img { aspect-ratio: 4 / 3; }
+
+  @media (min-width: 640px) {
+    .gal { grid-template-columns: repeat(3, 1fr); }
+    .gal__i--mare { grid-column: span 2; grid-row: span 2; }
+    .gal__i--mare .gal__img { aspect-ratio: 1 / 1; }
+  }
+
+  /* ---------- lightbox ---------- */
+
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+  .lb[hidden] { display: none; }
+  .lb__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 14, 17, .93);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: zoom-out;
+  }
+
+  .lb__fig {
+    position: relative;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-4);
+    justify-items: center;
+    max-width: min(1100px, 100%);
+    animation: lbIn .3s var(--ease);
+  }
+  @keyframes lbIn {
+    from { opacity: 0; transform: scale(.97); }
+    to   { opacity: 1; transform: none; }
+  }
+  .lb__img {
+    max-width: 100%;
+    max-height: 76dvh;
+    width: auto;
+    border-radius: var(--r-md);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+  }
+  .lb__cap {
+    display: grid;
+    gap: .3rem;
+    justify-items: center;
+    text-align: center;
+    color: rgba(255, 255, 255, .88);
+    font-size: var(--t-sm);
+    max-width: 60ch;
+  }
+  .lb__count {
+    font-size: var(--t-xs);
+    color: rgba(255, 255, 255, .5);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lb__x, .lb__nav {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2.9rem; height: 2.9rem;
+    border-radius: var(--r-full);
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .22);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background-color .2s var(--ease), transform .2s var(--ease);
+  }
+  .lb__x:hover, .lb__nav:hover { background: rgba(255, 255, 255, .22); }
+  .lb__x { top: clamp(.8rem, 3vw, 1.8rem); right: clamp(.8rem, 3vw, 1.8rem); }
+  .lb__nav { top: 50%; translate: 0 -50%; }
+  .lb__nav--p { left: clamp(.5rem, 2.5vw, 1.8rem); rotate: 90deg; }
+  .lb__nav--n { right: clamp(.5rem, 2.5vw, 1.8rem); rotate: -90deg; }
+  .lb__nav:hover { transform: scale(1.06); }
+</style>

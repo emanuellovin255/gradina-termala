@@ -1,0 +1,104 @@
+---
+import { type Lang, t } from '../content/i18n';
+import { PROGRAM } from '../content/shared';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const hh = (h: number) => `${String(h).padStart(2, '0')}:00`;
+
+// Reordonam ca saptamana sa inceapa luni, cum se citeste in RO si HU.
+const ordine = [1, 2, 3, 4, 5, 6, 0];
+---
+<section class="section" id="program">
+  <div class="wrap prog__grid">
+    <div class="section__head prog__head" data-reveal>
+      <span class="eyebrow">04</span>
+      <h2 class="section__title">{c.program.titlu}</h2>
+      <p class="section__intro">{c.program.intro}</p>
+      <p class="prog__sezon">
+        <Icon name="picatura" size={16} />
+        <span>{c.program.sezon}</span>
+      </p>
+      <p class="prog__sezonNota">{c.program.sezonNota}</p>
+    </div>
+
+    <ul class="prog card" data-reveal style="--reveal-delay:110ms">
+      {ordine.map((zi) => {
+        const p = PROGRAM[zi];
+        return (
+          <li class="prog__r" data-day={zi}>
+            <span class="prog__zi">{c.program.zile[zi]}</span>
+            <span class="prog__azi" aria-hidden="true">{c.program.azi}</span>
+            <span class="prog__ore">{p ? `${hh(p.deschis)} – ${hh(p.inchis)}` : c.program.inchis}</span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .prog__grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .prog__head { margin-bottom: 0; }
+
+  .prog__sezon {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: var(--sp-5);
+    padding: .45rem 1rem;
+    border-radius: var(--r-full);
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: var(--t-sm);
+    font-weight: 650;
+  }
+  .prog__sezonNota { margin-top: var(--sp-3); font-size: var(--t-xs); color: var(--ink-3); line-height: 1.55; }
+
+  .prog { overflow: hidden; }
+  .prog__r {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: clamp(.85rem, 2.2vw, 1.1rem) clamp(1.1rem, 3vw, 1.6rem);
+    border-bottom: 1px solid var(--line);
+    transition: background-color .25s var(--ease);
+  }
+  .prog__r:last-child { border-bottom: none; }
+
+  .prog__zi { font-size: var(--t-sm); font-weight: 550; }
+  .prog__ore {
+    font-size: var(--t-sm);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .01em;
+    color: var(--ink-2);
+  }
+
+  .prog__azi {
+    display: none;
+    padding: .16rem .55rem;
+    border-radius: var(--r-full);
+    background: var(--accent);
+    color: var(--bg);
+    font-size: .64rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* Ziua curenta e marcata din JS, ca sa nu inghetam data la build. */
+  .prog__r.is-today { background: var(--accent-soft); }
+  .prog__r.is-today .prog__zi { font-weight: 700; }
+  .prog__r.is-today .prog__ore { color: var(--ink); }
+  .prog__r.is-today .prog__azi { display: inline-block; }
+
+  @media (min-width: 900px) {
+    .prog__grid { grid-template-columns: 1fr 0.9fr; }
+  }
+</style>

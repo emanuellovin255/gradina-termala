@@ -1,0 +1,235 @@
+---
+import { type Lang, t, localePath, LANGS } from '../content/i18n';
+import { CONTACT } from '../content/shared';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const linkuri = [
+  ['#bazine', c.nav.bazine],
+  ['#apa', c.nav.apa],
+  ['#facilitati', c.nav.facilitati],
+  ['#preturi', c.nav.preturi],
+  ['#program', c.nav.program],
+  ['#galerie', c.nav.galerie],
+  ['#acces', c.nav.acces],
+] as const;
+---
+<header class="hdr" data-header>
+  <div class="wrap hdr__in">
+    <a class="hdr__brand" href={localePath(lang)}>
+      <Icon name="picatura" size={22} class="hdr__drop" />
+      <span>{c.hero.titlu}</span>
+    </a>
+
+    <nav class="hdr__nav" aria-label={c.footer.navTitlu}>
+      {linkuri.map(([href, eticheta]) => <a href={href}>{eticheta}</a>)}
+    </nav>
+
+    <div class="hdr__tools">
+      <div class="langs" role="group" aria-label="Limbă / Nyelv">
+        {LANGS.map((l) => (
+          <a
+            class:list={['langs__a', { 'is-on': l === lang }]}
+            href={localePath(l)}
+            hreflang={l}
+            lang={l}
+            aria-current={l === lang ? 'true' : undefined}
+          >{l.toUpperCase()}</a>
+        ))}
+      </div>
+
+      <button class="tema" type="button" data-theme-toggle aria-label="Light / dark">
+        <Icon name="soare" size={18} class="tema__s" />
+        <Icon name="luna" size={18} class="tema__l" />
+      </button>
+
+      <a class="btn btn--primary hdr__call" href={`tel:${CONTACT.telefonRaw}`}>
+        <Icon name="telefon" size={16} class="btn__icon" />
+        <span>{CONTACT.telefon}</span>
+      </a>
+
+      <button class="burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="meniu-mobil" aria-label={c.nav.bazine}>
+        <Icon name="meniu" size={22} class="burger__open" />
+        <Icon name="inchide" size={22} class="burger__close" />
+      </button>
+    </div>
+  </div>
+
+  <div class="mob" id="meniu-mobil" data-menu hidden>
+    <nav class="mob__nav" aria-label={c.footer.navTitlu}>
+      {linkuri.map(([href, eticheta]) => <a href={href}>{eticheta}</a>)}
+      <a href="#contact">{c.nav.contact}</a>
+    </nav>
+    <a class="btn btn--primary mob__call" href={`tel:${CONTACT.telefonRaw}`}>
+      <Icon name="telefon" size={16} class="btn__icon" />
+      <span>{CONTACT.telefon}</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    transition: background-color .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  /* Peste hero e transparent, cu text alb; dupa scroll devine bara solida. */
+  .hdr :global(a), .hdr :global(button) { color: #fff; }
+  .hdr.is-stuck {
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom-color: var(--line);
+    box-shadow: var(--shadow-sm);
+  }
+  .hdr.is-stuck :global(a), .hdr.is-stuck :global(button) { color: var(--ink); }
+
+  .hdr__in {
+    display: flex;
+    align-items: center;
+    gap: clamp(.75rem, 2vw, 2rem);
+    min-height: 4.5rem;
+  }
+
+  .hdr__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -.015em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .hdr__drop { color: var(--accent); }
+  .hdr:not(.is-stuck) .hdr__drop { color: #fff; opacity: .9; }
+
+  .hdr__nav {
+    display: none;
+    gap: clamp(.5rem, 1.4vw, 1.4rem);
+    margin-inline: auto;
+  }
+  .hdr__nav a {
+    font-size: var(--t-sm);
+    font-weight: 500;
+    text-decoration: none;
+    padding: .4rem .1rem;
+    position: relative;
+    opacity: .92;
+  }
+  .hdr__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: .1rem;
+    height: 1.5px;
+    background: currentColor;
+    transition: right .25s var(--ease);
+  }
+  .hdr__nav a:hover { opacity: 1; }
+  .hdr__nav a:hover::after { right: 0; }
+
+  .hdr__tools { display: flex; align-items: center; gap: .5rem; margin-left: auto; }
+
+  .langs {
+    display: flex;
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: var(--r-full);
+    padding: 2px;
+    opacity: .55;
+    transition: opacity .2s var(--ease);
+  }
+  .langs:hover { opacity: .9; }
+  .langs__a {
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    line-height: 1;
+    padding: .38rem .5rem;
+    border-radius: var(--r-full);
+    text-decoration: none;
+  }
+  /* Culorile sunt explicite: 'background: currentColor' se autoanula, pentru ca
+     regula de culoare de dedesubt schimba chiar currentColor si textul disparea. */
+  .hdr .langs__a.is-on { background: #FFFFFF; color: #06333A; }
+  .hdr.is-stuck .langs__a.is-on { background: var(--primary); color: var(--bg); }
+
+  .tema {
+    display: grid;
+    place-items: center;
+    width: 2.2rem; height: 2.2rem;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--r-full);
+    cursor: pointer;
+    opacity: .7;
+    transition: opacity .2s var(--ease), background-color .2s var(--ease);
+  }
+  .tema:hover { opacity: 1; background: color-mix(in srgb, currentColor 12%, transparent); }
+  .tema :global(svg) { grid-area: 1 / 1; }
+  .tema__l { display: none; }
+  :root[data-theme='dark'] .tema__s { display: none; }
+  :root[data-theme='dark'] .tema__l { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .tema__s { display: none; }
+    :root:not([data-theme='light']) .tema__l { display: block; }
+  }
+
+  .hdr__call { display: none; }
+  .hdr:not(.is-stuck) .hdr__call {
+    background: rgba(255, 255, 255, .16);
+    border-color: rgba(255, 255, 255, .4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .hdr:not(.is-stuck) .hdr__call:hover { background: rgba(255, 255, 255, .3); }
+
+  .burger {
+    display: grid;
+    place-items: center;
+    width: 2.4rem; height: 2.4rem;
+    background: none;
+    border: none;
+    border-radius: var(--r-full);
+    cursor: pointer;
+  }
+  .burger :global(svg) { grid-area: 1 / 1; }
+  .burger__close { display: none; }
+  .burger[aria-expanded='true'] .burger__open { display: none; }
+  .burger[aria-expanded='true'] .burger__close { display: block; }
+
+  .mob {
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    padding: var(--sp-4) clamp(1.1rem, 4vw, 2.5rem) var(--sp-6);
+    box-shadow: var(--shadow-lg);
+    max-height: calc(100dvh - 4.5rem);
+    overflow-y: auto;
+  }
+  .mob[hidden] { display: none; }
+  .mob__nav { display: grid; }
+  .hdr .mob__nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--t-md);
+    font-family: var(--font-display);
+    padding: .7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mob__call { margin-top: var(--sp-5); width: 100%; justify-content: center; }
+  .hdr .mob__call { color: #fff; }
+  :root[data-theme='dark'] .hdr .mob__call { color: #04191C; }
+
+  @media (min-width: 1080px) {
+    .hdr__nav { display: flex; }
+    .hdr__call { display: inline-flex; }
+    .burger { display: none; }
+    .mob { display: none !important; }
+  }
+</style>

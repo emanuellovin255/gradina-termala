@@ -1,0 +1,159 @@
+{
+  "lang": "hu",
+  "langNume": "Magyar",
+  "meta": {
+    "titlu": "Termálkert Kisiratos — termálfürdő Arad mellett",
+    "descriere": "Termálfürdő Kisiratoson, 22 km-re Aradtól. Három medence 55 °C-os forrásvízből, másfél hektáros kert, étterem, kemping és parkoló. Naponta nyitva 23:00-ig.",
+    "ogAlt": "Légi felvétel a kisiratosi Termálkert medencéiről"
+  },
+  "nav": {
+    "bazine": "Medencék",
+    "apa": "A termálvíz",
+    "facilitati": "Szolgáltatások",
+    "preturi": "Árak",
+    "program": "Nyitvatartás",
+    "galerie": "Galéria",
+    "acces": "Megközelítés",
+    "contact": "Kapcsolat",
+    "sariLaContinut": "Ugrás a tartalomhoz"
+  },
+  "hero": {
+    "supratitlu": "Kisiratos · Arad megye",
+    "titlu": "Termálkert",
+    "subtitlu": "55 °C-os termálvíz egy másfél hektáros kertben. Huszonkét kilométerre Aradtól, este tizenegyig nyitva.",
+    "ctaPrimar": "Hívjon: {telefon}",
+    "ctaSecundar": "Megközelítés",
+    "deschisAcum": "Most nyitva",
+    "inchisAcum": "Most zárva",
+    "panaLa": "{ora}-ig",
+    "deschideLa": "nyitás: {zi} {ora}",
+    "maine": "holnap"
+  },
+  "bara": {
+    "program": "Mai nyitvatartás",
+    "bilet": "Felnőtt belépő",
+    "apa": "Vízhőmérséklet",
+    "suna": "Hívás"
+  },
+  "bazine": {
+    "titlu": "Három medence, három hőmérséklet",
+    "intro": "Mindegyiket ugyanaz a termálforrás táplálja. Csak abban különböznek, mennyire hagyjuk lehűlni a vizet — és abban, hogy Ön mit vár egy strandnaptól.",
+    "lista": [
+      {
+        "nume": "Gyógymedence",
+        "temp": "36–40 °C",
+        "descriere": "A legmelegebb. Itt tartjuk a vízi gyógytorna foglalkozásokat, de bárki használhatja, aki egyszerűen csak forró vízben szeretne üldögélni. Hidegebb időben sem hűl ki soha.",
+        "pentru": "Rehabilitáció, ízületek, hűvös esték"
+      },
+      {
+        "nume": "Úszómedence",
+        "temp": "30 × 10 m",
+        "descriere": "Harminc méter hosszú, tíz méter széles, fokozatosan mélyülő aljzattal két méterig. Elég nagy ahhoz, hogy komolyan hosszokat lehessen úszni benne.",
+        "pentru": "Úszás, sport, felnőttek"
+      },
+      {
+        "nume": "Gyermekmedence",
+        "temp": "32–36 °C",
+        "descriere": "Kicsi, meleg és sekély. A hőmérsékletét szándékosan tartjuk a gyógymedencéé alatt, hogy a gyerekek órákig a vízben maradhassanak.",
+        "pentru": "Kisgyerekek, családok"
+      }
+    ]
+  },
+  "apa": {
+    "supratitlu": "A forrás",
+    "titlu": "A víz 55 fokosan jön a földből",
+    "paragrafe": [
+      "Semmit nem fűtünk mesterségesen. A víz közvetlenül a kútból érkezik, 55 °C-on, és útközben hűl le az egyes medencék hőmérsékletére. Ezért tartunk nyitva áprilistól novemberig — azokon a napokon is, amikor kint tíz fok van és esik.",
+      "A gyógymedencében vízi gyógytorna foglalkozásokat szervezünk, minden korosztálynak, kamaszoktól a nyugdíjasokig. Időpontért és részletekért a legegyszerűbb telefonon érdeklődni."
+    ],
+    "cifre": [
+      { "valoare": "55 °C", "eticheta": "hőmérséklet a forrásnál" },
+      { "valoare": "1,5 ha", "eticheta": "a kert területe" },
+      { "valoare": "ápr–nov", "eticheta": "nyitvatartási szezon" }
+    ],
+    "disclaimer": "A termálvíz nem helyettesíti az orvosi kezelést. Krónikus betegség esetén kérdezze meg kezelőorvosát, mielőtt hosszabb időt tölt forró vízben."
+  },
+  "facilitati": {
+    "titlu": "Mi van még itt",
+    "intro": "A belépő az egész komplexumra érvényes, a kempinget is beleértve. A lenti listából semmiért nem kell külön fizetni — csak az ételért, italért és a napozóágyért.",
+    "lista": [
+      { "nume": "Étterem", "descriere": "Hagyományos konyha, hétvégén" },
+      { "nume": "Büfé és bár", "descriere": "A teljes nyitvatartás alatt" },
+      { "nume": "Kemping", "descriere": "Közművesített terület, a belépőben" },
+      { "nume": "Grillezők", "descriere": "Kialakított helyek, saját alapanyaggal" },
+      { "nume": "Masszázs", "descriere": "Szabadtéri masszázsrészleg" },
+      { "nume": "Sportpályák", "descriere": "Foci és játék a füvön" },
+      { "nume": "Öltözők és zuhanyzók", "descriere": "Melegvizes zuhanyzók" },
+      { "nume": "Parkoló", "descriere": "Nagy és ingyenes, a bejáratnál" },
+      { "nume": "Árnyékos részek", "descriere": "Szomorúfüzek és pergolák" },
+      { "nume": "Rendezvények", "descriere": "DJ-s bulik, gyerekfoglalkozások" }
+    ]
+  },
+  "preturi": {
+    "titlu": "Árak",
+    "intro": "Egyetlen jegy, minden benne: mindhárom medence, a kert, a sportpályák és a kempingterület.",
+    "lista": [
+      { "nume": "Felnőtt", "pret": 35, "detaliu": "teljes belépés, egész napra" },
+      { "nume": "Nyugdíjas", "pret": 25, "detaliu": "nyugdíjszelvény felmutatásával" },
+      { "nume": "Gyermek", "pret": 15, "detaliu": "teljes belépés, egész napra" },
+      { "nume": "Napozóágy", "pret": 15, "detaliu": "opcionális, a készlet erejéig" }
+    ],
+    "nota": "Az árak lejben értendők, a folyó szezonra. Csoportok, zártkörű rendezvények vagy kempingfoglalás esetén hívjon minket — megbeszélhetjük.",
+    "inclus": "A kemping benne van a belépő árában"
+  },
+  "program": {
+    "titlu": "Nyitvatartás",
+    "intro": "Szezonban a hét minden napján nyitva. Hétfőn később kezdünk, a medencék karbantartása miatt.",
+    "zile": ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
+    "zileScurt": ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
+    "inchis": "Zárva",
+    "azi": "ma",
+    "sezon": "Szezon: április – november",
+    "sezonNota": "A pontos nyitási és zárási dátumot minden évben a Facebook-oldalunkon jelentjük be."
+  },
+  "galerie": {
+    "titlu": "Galéria",
+    "intro": "Fényképek a kertből, egy szezon során.",
+    "deschide": "Kép megnyitása",
+    "inchide": "Bezárás",
+    "anterior": "Előző kép",
+    "urmator": "Következő kép",
+    "contor": "{n}. kép a(z) {total}-ból"
+  },
+  "acces": {
+    "titlu": "Megközelítés",
+    "intro": "Kisiratoson vagyunk, Arad megye legészakibb községében, néhány kilométerre a magyar határtól.",
+    "masina": "Autóval",
+    "masinaRute": [
+      { "ruta": "Arad → DJ 709B → Kisiratos", "detaliu": "22 km, a legrövidebb út" },
+      { "ruta": "Arad → DJ 709C → DJ 709J → Kisiratos", "detaliu": "28 km, hosszabb, de kevésbé forgalmas" }
+    ],
+    "parcare": "Nagy, ingyenes parkoló közvetlenül a bejáratnál.",
+    "autobuz": "Busszal",
+    "autobuzIntro": "A CTP Arad járata Arad – Şofronea – Kisiratos útvonalon közlekedik, a Podgoria megállóból indulva.",
+    "autobuzSpre": "Arad → Kisiratos",
+    "autobuzDinspre": "Kisiratos → Arad",
+    "autobuzNota": "A menetrend szezononként változhat. Indulás előtt ellenőrizze a CTP Arad honlapján.",
+    "navigheaza": "Megnyitás Google Térképen",
+    "wazeBtn": "Megnyitás Waze-ben",
+    "hartaTitlu": "Térkép a kisiratosi Termálkert helyével",
+    "adresa": "Cím",
+    "coordonate": "GPS-koordináták"
+  },
+  "contact": {
+    "titlu": "Kapcsolat",
+    "intro": "A leggyorsabb választ telefonon kapja. Kempingfoglalás, zártkörű rendezvény vagy vízi gyógytorna ügyében hívjon minket közvetlenül.",
+    "telefonEticheta": "Telefon",
+    "emailEticheta": "E-mail",
+    "socialEticheta": "Közösségi oldalak",
+    "sunaAcum": "Hívás most",
+    "scrieWhatsapp": "Írjon WhatsAppon",
+    "urmareste": "Kövessen minket Facebookon — ott jelentjük be a szezonnyitást, a rendezvényeket és a rendhagyó nyitvatartású napokat."
+  },
+  "footer": {
+    "descriere": "Termálfürdő Kisiratoson, Arad megyében.",
+    "drepturi": "Termálkert Kisiratos",
+    "navTitlu": "Navigáció",
+    "contactTitlu": "Kapcsolat"
+  }
+}

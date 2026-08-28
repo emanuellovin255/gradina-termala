@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Bazine from '../../components/Bazine.astro';
+import ApaTermala from '../../components/ApaTermala.astro';
+import Facilitati from '../../components/Facilitati.astro';
+import Preturi from '../../components/Preturi.astro';
+import Program from '../../components/Program.astro';
+import Galerie from '../../components/Galerie.astro';
+import Acces from '../../components/Acces.astro';
+import Contact from '../../components/Contact.astro';
+
+const lang = 'hu' as const;
+---
+<Base lang={lang}>
+  <Hero lang={lang} />
+  <Bazine lang={lang} />
+  <ApaTermala lang={lang} />
+  <Facilitati lang={lang} />
+  <Preturi lang={lang} />
+  <Program lang={lang} />
+  <Galerie lang={lang} />
+  <Acces lang={lang} />
+  <Contact lang={lang} />
+</Base>

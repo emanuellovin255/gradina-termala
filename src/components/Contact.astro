@@ -1,0 +1,105 @@
+---
+import { type Lang, t } from '../content/i18n';
+import { CONTACT } from '../content/shared';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+---
+<section class="section section--alt" id="contact">
+  <div class="wrap ct" data-reveal>
+    <div class="ct__head">
+      <span class="eyebrow">07</span>
+      <h2 class="section__title">{c.contact.titlu}</h2>
+      <p class="section__intro">{c.contact.intro}</p>
+    </div>
+
+    <div class="ct__grid">
+      <a class="ct__c card" href={`tel:${CONTACT.telefonRaw}`}>
+        <span class="ct__ic"><Icon name="telefon" size={20} /></span>
+        <span class="ct__k">{c.contact.telefonEticheta}</span>
+        <span class="ct__v">{CONTACT.telefon}</span>
+      </a>
+
+      <a class="ct__c card" href={`mailto:${CONTACT.email}`}>
+        <span class="ct__ic"><Icon name="email" size={20} /></span>
+        <span class="ct__k">{c.contact.emailEticheta}</span>
+        <span class="ct__v ct__v--sm">{CONTACT.email}</span>
+      </a>
+
+      <a class="ct__c card" href={CONTACT.whatsapp} target="_blank" rel="noopener">
+        <span class="ct__ic"><Icon name="whatsapp" size={20} /></span>
+        <span class="ct__k">WhatsApp</span>
+        <span class="ct__v ct__v--sm">{c.contact.scrieWhatsapp}</span>
+      </a>
+    </div>
+
+    <div class="ct__soc">
+      <p class="ct__urm">{c.contact.urmareste}</p>
+      <div class="ct__links">
+        <a class="btn btn--primary" href={CONTACT.facebook} target="_blank" rel="noopener">
+          <Icon name="facebook" size={16} class="btn__icon" />
+          <span>Facebook</span>
+        </a>
+        <a class="btn btn--ghost" href={CONTACT.instagram} target="_blank" rel="noopener">
+          <Icon name="instagram" size={16} class="btn__icon" />
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ct { display: grid; gap: clamp(2rem, 5vw, 3.2rem); }
+  .ct__head { max-width: 60ch; }
+
+  .ct__grid {
+    display: grid;
+    gap: clamp(1rem, 2.4vw, 1.4rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  }
+  .ct__c {
+    display: grid;
+    gap: .3rem;
+    padding: clamp(1.3rem, 3vw, 1.8rem);
+    text-decoration: none;
+    color: inherit;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .ct__c:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+    color: inherit;
+  }
+  .ct__ic {
+    display: grid;
+    place-items: center;
+    width: 2.6rem; height: 2.6rem;
+    margin-bottom: var(--sp-3);
+    border-radius: var(--r-md);
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+  .ct__k {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .ct__v { font-size: var(--t-md); font-weight: 650; letter-spacing: -.01em; }
+  .ct__v--sm { font-size: var(--t-sm); word-break: break-word; }
+
+  .ct__soc {
+    display: grid;
+    gap: var(--sp-5);
+    justify-items: start;
+    padding-top: clamp(1.5rem, 4vw, 2.5rem);
+    border-top: 1px solid var(--line-strong);
+  }
+  .ct__urm { max-width: 62ch; color: var(--ink-2); font-size: var(--t-md); line-height: 1.6; }
+  .ct__links { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+</style>

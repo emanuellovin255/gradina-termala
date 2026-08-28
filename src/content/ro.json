@@ -1,0 +1,159 @@
+{
+  "lang": "ro",
+  "langNume": "Română",
+  "meta": {
+    "titlu": "Grădina Termală Dorobanți — ștrand cu apă termală lângă Arad",
+    "descriere": "Ștrand termal în Dorobanți, la 22 km de Arad. Trei bazine alimentate dintr-un izvor de 55 °C, 1,5 hectare de grădină, restaurant, camping și parcare. Deschis zilnic până la 23:00.",
+    "ogAlt": "Vedere aeriană a bazinelor de la Grădina Termală Dorobanți"
+  },
+  "nav": {
+    "bazine": "Bazine",
+    "apa": "Apa termală",
+    "facilitati": "Facilități",
+    "preturi": "Prețuri",
+    "program": "Program",
+    "galerie": "Galerie",
+    "acces": "Cum ajungi",
+    "contact": "Contact",
+    "sariLaContinut": "Sari la conținut"
+  },
+  "hero": {
+    "supratitlu": "Dorobanți · județul Arad",
+    "titlu": "Grădina Termală",
+    "subtitlu": "Apă termală de izvor, la 55 °C, într-o grădină de un hectar și jumătate. La 22 de kilometri de Arad și deschisă până la 11 seara.",
+    "ctaPrimar": "Sună la {telefon}",
+    "ctaSecundar": "Cum ajungi",
+    "deschisAcum": "Deschis acum",
+    "inchisAcum": "Închis acum",
+    "panaLa": "până la {ora}",
+    "deschideLa": "deschide {zi} la {ora}",
+    "maine": "mâine"
+  },
+  "bara": {
+    "program": "Program azi",
+    "bilet": "Bilet adult",
+    "apa": "Apa în bazine",
+    "suna": "Sună"
+  },
+  "bazine": {
+    "titlu": "Trei bazine, trei temperaturi",
+    "intro": "Toate sunt alimentate din același izvor termal. Diferă doar prin cât de tare le lăsăm să se răcorească — și prin ce cauți de la o zi la ștrand.",
+    "lista": [
+      {
+        "nume": "Bazinul de tratament",
+        "temp": "36–40 °C",
+        "descriere": "Cel mai cald. Aici se țin ședințele de hidrokinetoterapie, dar e deschis oricui vrea să stea în apă fierbinte fără să facă nimic. Iarna nu se răcește niciodată complet.",
+        "pentru": "Recuperare, articulații, seri răcoroase"
+      },
+      {
+        "nume": "Bazinul de înot",
+        "temp": "30 × 10 m",
+        "descriere": "Treizeci de metri lungime, zece lățime, cu adâncime care coboară treptat până la doi metri. Destul cât să înoți serios lungimi, nu doar să te bălăcești.",
+        "pentru": "Înot, sport, adulți"
+      },
+      {
+        "nume": "Bazinul pentru copii",
+        "temp": "32–36 °C",
+        "descriere": "Mic, cald și puțin adânc. Temperatura e ținută mai jos decât la tratament, ca să poată sta în apă ore în șir fără să obosească.",
+        "pentru": "Copii mici, familii"
+      }
+    ]
+  },
+  "apa": {
+    "supratitlu": "Izvorul",
+    "titlu": "Apa iese din pământ la 55 de grade",
+    "paragrafe": [
+      "Nu se încălzește nimic artificial. Apa vine direct din foraj, la 55 °C, și se răcorește pe drum până la temperatura fiecărui bazin. De asta ștrandul e deschis din aprilie până în noiembrie — inclusiv în zilele în care afară sunt zece grade și ploaie.",
+      "În bazinul de tratament se organizează ședințe de hidrokinetoterapie, pentru toate vârstele, de la adolescenți la seniori. Pentru programări și detalii, cel mai simplu e un telefon."
+    ],
+    "cifre": [
+      { "valoare": "55 °C", "eticheta": "temperatura la sursă" },
+      { "valoare": "1,5 ha", "eticheta": "suprafața grădinii" },
+      { "valoare": "apr–nov", "eticheta": "sezon de funcționare" }
+    ],
+    "disclaimer": "Apa termală nu înlocuiește tratamentul medical. Dacă ai o afecțiune cronică, întreabă-ți medicul înainte de ședințe prelungite în apă fierbinte."
+  },
+  "facilitati": {
+    "titlu": "Ce mai găsești aici",
+    "intro": "Biletul acoperă tot complexul, campingul inclus. Nu se plătește separat pentru nimic din lista de mai jos, în afară de mâncare, băutură și șezlong.",
+    "lista": [
+      { "nume": "Restaurant", "descriere": "Bucătărie tradițională, în weekend" },
+      { "nume": "Bar și fast-food", "descriere": "Deschis pe toată durata programului" },
+      { "nume": "Camping", "descriere": "Zonă cu utilități, inclusă în bilet" },
+      { "nume": "Grătare", "descriere": "Locuri amenajate, îți aduci mâncarea" },
+      { "nume": "Masaj", "descriere": "Zonă de masaj în aer liber" },
+      { "nume": "Terenuri de sport", "descriere": "Fotbal și joacă pe iarbă" },
+      { "nume": "Vestiare și dușuri", "descriere": "Dușuri cu apă caldă" },
+      { "nume": "Parcare", "descriere": "Mare și gratuită, la intrare" },
+      { "nume": "Zone umbrite", "descriere": "Sălcii și pergole peste tot" },
+      { "nume": "Evenimente", "descriere": "Petreceri cu DJ, ateliere pentru copii" }
+    ]
+  },
+  "preturi": {
+    "titlu": "Prețuri",
+    "intro": "Un singur bilet, acces la tot: toate cele trei bazine, grădina, terenurile de sport și zona de camping.",
+    "lista": [
+      { "nume": "Adult", "pret": 35, "detaliu": "acces complet, toată ziua" },
+      { "nume": "Pensionar", "pret": 25, "detaliu": "pe baza cuponului de pensie" },
+      { "nume": "Copil", "pret": 15, "detaliu": "acces complet, toată ziua" },
+      { "nume": "Șezlong", "pret": 15, "detaliu": "opțional, în limita disponibilității" }
+    ],
+    "nota": "Prețuri în lei, pentru sezonul curent. Pentru grupuri, evenimente private sau rezervări de camping, sună-ne — se poate discuta.",
+    "inclus": "Camping inclus în prețul biletului"
+  },
+  "program": {
+    "titlu": "Program",
+    "intro": "Deschis șapte zile pe săptămână în sezon. Lunea începem mai târziu, pentru întreținerea bazinelor.",
+    "zile": ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
+    "zileScurt": ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
+    "inchis": "Închis",
+    "azi": "azi",
+    "sezon": "Sezon: aprilie – noiembrie",
+    "sezonNota": "Datele exacte de deschidere și închidere se anunță în fiecare an pe Facebook."
+  },
+  "galerie": {
+    "titlu": "Galerie",
+    "intro": "Fotografii din grădină, de-a lungul unui sezon.",
+    "deschide": "Deschide imaginea",
+    "inchide": "Închide",
+    "anterior": "Imaginea anterioară",
+    "urmator": "Imaginea următoare",
+    "contor": "Imaginea {n} din {total}"
+  },
+  "acces": {
+    "titlu": "Cum ajungi",
+    "intro": "Suntem în Dorobanți, comuna cea mai nordică a județului Arad, la câțiva kilometri de granița cu Ungaria.",
+    "masina": "Cu mașina",
+    "masinaRute": [
+      { "ruta": "Arad → DJ 709B → Dorobanți", "detaliu": "22 km, drumul cel mai scurt" },
+      { "ruta": "Arad → DJ 709C → DJ 709J → Dorobanți", "detaliu": "28 km, mai lung dar mai puțin aglomerat" }
+    ],
+    "parcare": "Parcare mare și gratuită chiar la intrare.",
+    "autobuz": "Cu autobuzul",
+    "autobuzIntro": "CTP Arad face cursa Arad – Șofronea – Dorobanți, cu plecare din stația Podgoria.",
+    "autobuzSpre": "Arad → Dorobanți",
+    "autobuzDinspre": "Dorobanți → Arad",
+    "autobuzNota": "Orarul se poate schimba de la un sezon la altul. Verifică pe site-ul CTP Arad înainte de drum.",
+    "navigheaza": "Deschide în Google Maps",
+    "wazeBtn": "Deschide în Waze",
+    "hartaTitlu": "Hartă cu locația Grădinii Termale în Dorobanți",
+    "adresa": "Adresă",
+    "coordonate": "Coordonate GPS"
+  },
+  "contact": {
+    "titlu": "Contact",
+    "intro": "Cel mai rapid răspuns îl primești la telefon. Pentru rezervări de camping, evenimente private sau ședințe de hidrokinetoterapie, sună direct.",
+    "telefonEticheta": "Telefon",
+    "emailEticheta": "Email",
+    "socialEticheta": "Pe rețele",
+    "sunaAcum": "Sună acum",
+    "scrieWhatsapp": "Scrie pe WhatsApp",
+    "urmareste": "Urmărește-ne pe Facebook — acolo anunțăm deschiderea sezonului, evenimentele și zilele cu program special."
+  },
+  "footer": {
+    "descriere": "Ștrand cu apă termală în Dorobanți, județul Arad.",
+    "drepturi": "Grădina Termală Dorobanți",
+    "navTitlu": "Navigare",
+    "contactTitlu": "Contact"
+  }
+}

@@ -1,0 +1,168 @@
+---
+import { type Lang, t } from '../content/i18n';
+import { LOCATIE, AUTOBUZ } from '../content/shared';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const localitate = lang === 'ro' ? LOCATIE.localitate : LOCATIE.localitateHu;
+---
+<section class="section" id="acces">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow">06</span>
+      <h2 class="section__title">{c.acces.titlu}</h2>
+      <p class="section__intro">{c.acces.intro}</p>
+    </div>
+
+    <div class="acc">
+      <div class="acc__harta card" data-reveal>
+        <iframe
+          class="acc__iframe"
+          src={LOCATIE.osmEmbed}
+          title={c.acces.hartaTitlu}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <div class="acc__sub">
+          <div class="acc__adr">
+            <span class="acc__k">{c.acces.adresa}</span>
+            <span class="acc__v">{localitate}, {LOCATIE.judet}, {LOCATIE.codPostal}</span>
+            <span class="acc__k acc__k--2">{c.acces.coordonate}</span>
+            <span class="acc__v acc__v--mono">{LOCATIE.lat}, {LOCATIE.lon}</span>
+          </div>
+          <div class="acc__btns">
+            <a class="btn btn--primary" href={LOCATIE.googleMaps} target="_blank" rel="noopener">
+              <Icon name="pin" size={16} class="btn__icon" />
+              <span>{c.acces.navigheaza}</span>
+            </a>
+            <a class="btn btn--ghost" href={LOCATIE.waze} target="_blank" rel="noopener">
+              <Icon name="sageata" size={16} class="btn__icon" />
+              <span>{c.acces.wazeBtn}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc__col">
+        <article class="acc__c card" data-reveal style="--reveal-delay:100ms">
+          <h3 class="acc__t"><Icon name="masina" size={19} /><span>{c.acces.masina}</span></h3>
+          <ul class="rute">
+            {c.acces.masinaRute.map((r) => (
+              <li class="rute__i">
+                <strong>{r.ruta}</strong>
+                <em>{r.detaliu}</em>
+              </li>
+            ))}
+          </ul>
+          <p class="acc__nota">{c.acces.parcare}</p>
+        </article>
+
+        <article class="acc__c card" data-reveal style="--reveal-delay:180ms">
+          <h3 class="acc__t"><Icon name="autobuz" size={19} /><span>{c.acces.autobuz}</span></h3>
+          <p class="acc__p">{c.acces.autobuzIntro}</p>
+          <div class="bus">
+            <div class="bus__c">
+              <span class="bus__k">{c.acces.autobuzSpre}</span>
+              <ul class="bus__ore">{AUTOBUZ.spre.map((o) => <li>{o}</li>)}</ul>
+            </div>
+            <div class="bus__c">
+              <span class="bus__k">{c.acces.autobuzDinspre}</span>
+              <ul class="bus__ore">{AUTOBUZ.dinspre.map((o) => <li>{o}</li>)}</ul>
+            </div>
+          </div>
+          <p class="acc__nota">{c.acces.autobuzNota}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .acc { display: grid; gap: clamp(1.2rem, 3vw, 2rem); align-items: start; }
+
+  .acc__harta { overflow: hidden; }
+  .acc__iframe {
+    display: block;
+    width: 100%;
+    height: clamp(260px, 42vw, 400px);
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    filter: saturate(.88);
+  }
+  :root[data-theme='dark'] .acc__iframe { filter: saturate(.7) brightness(.82) contrast(1.06); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .acc__iframe { filter: saturate(.7) brightness(.82) contrast(1.06); }
+  }
+
+  .acc__sub {
+    display: grid;
+    gap: var(--sp-4);
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+  }
+  .acc__adr { display: grid; gap: .12rem; }
+  .acc__k {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .acc__k--2 { margin-top: var(--sp-3); }
+  .acc__v { font-size: var(--t-sm); font-weight: 550; }
+  .acc__v--mono { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .acc__btns { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+
+  .acc__col { display: grid; gap: clamp(1.2rem, 3vw, 2rem); }
+  .acc__c { padding: clamp(1.2rem, 3vw, 1.75rem); }
+  .acc__t {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: var(--t-lg);
+    margin-bottom: var(--sp-4);
+  }
+  .acc__t :global(svg) { color: var(--primary); }
+  .acc__p { color: var(--ink-2); font-size: var(--t-sm); line-height: 1.6; }
+
+  .rute { display: grid; gap: var(--sp-3); }
+  .rute__i {
+    display: grid;
+    gap: .15rem;
+    padding-left: var(--sp-4);
+    border-left: 2px solid var(--primary-soft);
+  }
+  .rute__i strong { font-size: var(--t-sm); font-weight: 600; }
+  .rute__i em { font-style: normal; font-size: var(--t-xs); color: var(--ink-3); }
+
+  .bus { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-top: var(--sp-4); }
+  .bus__c {
+    padding: var(--sp-4);
+    border-radius: var(--r-md);
+    background: var(--bg-alt);
+  }
+  .bus__k {
+    display: block;
+    font-size: var(--t-xs);
+    font-weight: 700;
+    color: var(--ink-3);
+    margin-bottom: var(--sp-2);
+    line-height: 1.35;
+  }
+  .bus__ore { display: grid; gap: .2rem; font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(--t-sm); }
+
+  .acc__nota {
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+    font-size: var(--t-xs);
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 940px) {
+    .acc { grid-template-columns: 1.15fr 1fr; }
+  }
+</style>

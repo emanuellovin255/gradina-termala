@@ -1,0 +1,141 @@
+---
+import { type Lang, t, localePath, LANGS } from '../content/i18n';
+import { CONTACT, LOCATIE } from '../content/shared';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const an = new Date().getFullYear();
+const localitate = lang === 'ro' ? LOCATIE.localitate : LOCATIE.localitateHu;
+
+const linkuri = [
+  ['#bazine', c.nav.bazine],
+  ['#apa', c.nav.apa],
+  ['#facilitati', c.nav.facilitati],
+  ['#preturi', c.nav.preturi],
+  ['#program', c.nav.program],
+  ['#galerie', c.nav.galerie],
+  ['#acces', c.nav.acces],
+  ['#contact', c.nav.contact],
+] as const;
+---
+<footer class="ft">
+  <div class="wrap ft__grid">
+    <div class="ft__brand">
+      <p class="ft__nume">
+        <Icon name="picatura" size={20} />
+        <span>{c.hero.titlu}</span>
+      </p>
+      <p class="ft__desc">{c.footer.descriere}</p>
+      <div class="ft__soc">
+        <a href={CONTACT.facebook} target="_blank" rel="noopener" aria-label="Facebook"><Icon name="facebook" size={18} /></a>
+        <a href={CONTACT.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
+        <a href={CONTACT.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp"><Icon name="whatsapp" size={18} /></a>
+      </div>
+    </div>
+
+    <nav class="ft__nav" aria-label={c.footer.navTitlu}>
+      <h2 class="ft__h">{c.footer.navTitlu}</h2>
+      <ul>{linkuri.map(([h, e]) => <li><a href={h}>{e}</a></li>)}</ul>
+    </nav>
+
+    <div class="ft__ct">
+      <h2 class="ft__h">{c.footer.contactTitlu}</h2>
+      <ul>
+        <li><a href={`tel:${CONTACT.telefonRaw}`}>{CONTACT.telefon}</a></li>
+        <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+        <li class="ft__adr">{localitate}, {LOCATIE.judet}<br />{LOCATIE.codPostal}, {LOCATIE.tara}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap ft__jos">
+    <p>© {an} {c.footer.drepturi}</p>
+    <div class="ft__langs">
+      {LANGS.map((l) => (
+        <a class:list={{ 'is-on': l === lang }} href={localePath(l)} hreflang={l} lang={l}>
+          {l === 'ro' ? 'Română' : 'Magyar'}
+        </a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ft {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .ft__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .ft__nume {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--font-display);
+    font-size: var(--t-lg);
+    font-weight: 600;
+    letter-spacing: -.02em;
+  }
+  .ft__nume :global(svg) { color: var(--accent); }
+  .ft__desc { margin-top: var(--sp-3); color: var(--ink-2); font-size: var(--t-sm); max-width: 38ch; line-height: 1.6; }
+
+  .ft__soc { display: flex; gap: var(--sp-2); margin-top: var(--sp-5); }
+  .ft__soc a {
+    display: grid;
+    place-items: center;
+    width: 2.4rem; height: 2.4rem;
+    border-radius: var(--r-full);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    transition: color .2s var(--ease), border-color .2s var(--ease), background-color .2s var(--ease);
+  }
+  .ft__soc a:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-soft); }
+
+  .ft__h {
+    font-family: var(--font-body);
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: var(--sp-4);
+  }
+  .ft__nav ul, .ft__ct ul { display: grid; gap: .55rem; }
+  .ft__nav a, .ft__ct a {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: var(--t-sm);
+    transition: color .2s var(--ease);
+  }
+  .ft__nav a:hover, .ft__ct a:hover { color: var(--primary); }
+  .ft__adr { color: var(--ink-3); font-size: var(--t-sm); line-height: 1.6; }
+
+  .ft__jos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding-block: var(--sp-5);
+    border-top: 1px solid var(--line);
+    color: var(--ink-3);
+    font-size: var(--t-xs);
+  }
+  .ft__langs { display: flex; gap: var(--sp-4); }
+  .ft__langs a { color: var(--ink-3); text-decoration: none; }
+  .ft__langs a:hover { color: var(--primary); }
+  .ft__langs a.is-on { color: var(--ink); font-weight: 650; }
+
+  @media (min-width: 760px) {
+    .ft__grid { grid-template-columns: 1.6fr 1fr 1fr; }
+  }
+</style>

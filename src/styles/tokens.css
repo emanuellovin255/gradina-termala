@@ -1,0 +1,118 @@
+/* Paleta pornita de la materialul locului: apa termala minerala, chihlimbarul
+   izvorului de 55 °C, calcarul aleilor si verdele salciilor din gradina. */
+
+:root {
+  color-scheme: light;
+
+  --bg:          #F7F4EE;
+  --bg-alt:      #EFE9DF;
+  --surface:     #FFFFFF;
+  --surface-2:   #FBF9F5;
+
+  --ink:         #0F252A;
+  --ink-2:       #40565B;
+  --ink-3:       #6C8186;
+  --ink-on-dark: #F4F9F8;
+
+  --line:        rgba(15, 37, 42, 0.12);
+  --line-strong: rgba(15, 37, 42, 0.22);
+
+  --primary:      #0B6E75;
+  --primary-deep: #06474D;
+  --primary-soft: #E0EFEF;
+
+  --accent:      #B4611A;
+  --accent-soft: #FAEDDE;
+
+  --green:       #2E5A3C;
+
+  --shadow-sm: 0 1px 2px rgba(15, 37, 42, .06), 0 2px 6px rgba(15, 37, 42, .05);
+  --shadow-md: 0 4px 12px rgba(15, 37, 42, .08), 0 12px 28px rgba(15, 37, 42, .07);
+  --shadow-lg: 0 8px 24px rgba(15, 37, 42, .10), 0 28px 60px rgba(15, 37, 42, .12);
+
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Scara tipografica fluida: minimul e pentru 360px, maximul pentru 1400px. */
+  --t-xs:   clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem);
+  --t-sm:   clamp(0.86rem, 0.83rem + 0.16vw, 0.94rem);
+  --t-base: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
+  --t-md:   clamp(1.1rem, 1.03rem + 0.34vw, 1.28rem);
+  --t-lg:   clamp(1.32rem, 1.18rem + 0.62vw, 1.68rem);
+  --t-xl:   clamp(1.66rem, 1.36rem + 1.3vw, 2.45rem);
+  --t-2xl:  clamp(2.05rem, 1.55rem + 2.2vw, 3.4rem);
+  --t-3xl:  clamp(2.6rem, 1.6rem + 4.4vw, 5.2rem);
+
+  --sp-1: .25rem;  --sp-2: .5rem;   --sp-3: .75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;  --sp-6: 2rem;    --sp-7: 3rem;    --sp-8: 4rem;
+  --sp-9: 6rem;    --sp-10: 8rem;
+
+  --r-sm: 6px;  --r-md: 12px;  --r-lg: 20px;  --r-xl: 28px;  --r-full: 999px;
+
+  --wrap: 1200px;
+  --wrap-narrow: 760px;
+
+  --ease: cubic-bezier(.32, .72, .28, 1);
+}
+
+/* Dark mode: implicit dupa preferinta sistemului, dar comutatorul din header
+   scrie data-theme pe <html> si castiga in ambele directii. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --bg:          #06161A;
+    --bg-alt:      #0B2126;
+    --surface:     #0F282E;
+    --surface-2:   #133038;
+
+    --ink:         #E8F2F1;
+    --ink-2:       #A6BEC1;
+    --ink-3:       #7B9599;
+
+    --line:        rgba(232, 242, 241, 0.14);
+    --line-strong: rgba(232, 242, 241, 0.26);
+
+    --primary:      #4FC0B8;
+    --primary-deep: #7BD6CE;
+    --primary-soft: rgba(79, 192, 184, 0.13);
+
+    --accent:      #F0A44E;
+    --accent-soft: rgba(240, 164, 78, 0.13);
+
+    --green:       #6FB183;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .34), 0 2px 6px rgba(0, 0, 0, .28);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, .40), 0 12px 28px rgba(0, 0, 0, .34);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, .46), 0 28px 60px rgba(0, 0, 0, .44);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg:          #06161A;
+  --bg-alt:      #0B2126;
+  --surface:     #0F282E;
+  --surface-2:   #133038;
+
+  --ink:         #E8F2F1;
+  --ink-2:       #A6BEC1;
+  --ink-3:       #7B9599;
+
+  --line:        rgba(232, 242, 241, 0.14);
+  --line-strong: rgba(232, 242, 241, 0.26);
+
+  --primary:      #4FC0B8;
+  --primary-deep: #7BD6CE;
+  --primary-soft: rgba(79, 192, 184, 0.13);
+
+  --accent:      #F0A44E;
+  --accent-soft: rgba(240, 164, 78, 0.13);
+
+  --green:       #6FB183;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .34), 0 2px 6px rgba(0, 0, 0, .28);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .40), 0 12px 28px rgba(0, 0, 0, .34);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, .46), 0 28px 60px rgba(0, 0, 0, .44);
+}

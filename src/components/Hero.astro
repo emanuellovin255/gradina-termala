@@ -1,0 +1,235 @@
+---
+import { Image } from 'astro:assets';
+import { type Lang, t, fill } from '../content/i18n';
+import { CONTACT, PRETURI, APA, PROGRAM } from '../content/shared';
+import Icon from './Icon.astro';
+import hero from '../assets/photos/hero.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+---
+<section class="hero">
+  <div class="hero__media">
+    <Image
+      src={hero}
+      alt={c.meta.ogAlt}
+      widths={[640, 1024, 1600, 2048]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      quality={82}
+      class="hero__img"
+    />
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="wrap hero__in">
+    <p class="hero__eyebrow">{c.hero.supratitlu}</p>
+    <h1 class="hero__titlu">{c.hero.titlu}</h1>
+    <p class="hero__sub">{c.hero.subtitlu}</p>
+
+    <p class="stare" data-open-badge hidden>
+      <span class="stare__pt" data-open-dot></span>
+      <span data-open-text></span>
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--primary" href={`tel:${CONTACT.telefonRaw}`}>
+        <Icon name="telefon" size={16} class="btn__icon" />
+        <span>{fill(c.hero.ctaPrimar, { telefon: CONTACT.telefon })}</span>
+      </a>
+      <a class="btn btn--onphoto" href="#acces">
+        <Icon name="pin" size={16} class="btn__icon" />
+        <span>{c.hero.ctaSecundar}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__bar">
+    <div class="wrap bara">
+      <div class="bara__item">
+        <Icon name="ceas" size={19} class="bara__ic" />
+        <span class="bara__k">{c.bara.program}</span>
+        <span class="bara__v" data-open-today>—</span>
+      </div>
+      <div class="bara__item">
+        <Icon name="bilet" size={19} class="bara__ic" />
+        <span class="bara__k">{c.bara.bilet}</span>
+        <span class="bara__v">{PRETURI.adult} {PRETURI.moneda}</span>
+      </div>
+      <div class="bara__item">
+        <Icon name="termometru" size={19} class="bara__ic" />
+        <span class="bara__k">{c.bara.apa}</span>
+        <span class="bara__v">{APA.copiiMin}–{APA.tratamentMax} °C</span>
+      </div>
+      <a class="bara__item bara__item--link" href={`tel:${CONTACT.telefonRaw}`}>
+        <Icon name="telefon" size={19} class="bara__ic" />
+        <span class="bara__k">{c.bara.suna}</span>
+        <span class="bara__v">{CONTACT.telefon}</span>
+      </a>
+    </div>
+  </div>
+  <script
+    type="application/json"
+    data-hours-data
+    set:html={JSON.stringify({
+      program: PROGRAM,
+      zile: c.program.zile,
+      inchis: c.program.inchis,
+      deschisAcum: c.hero.deschisAcum,
+      inchisAcum: c.hero.inchisAcum,
+      panaLa: c.hero.panaLa,
+      deschideLa: c.hero.deschideLa,
+      maine: c.hero.maine,
+    })}
+  />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    isolation: isolate;
+    color: #fff;
+  }
+
+  .hero__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero__img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+
+  /* Doua gradiente: unul jos, pentru text, unul sus, pentru lizibilitatea header-ului. */
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgba(4, 22, 26, .93) 0%, rgba(4, 22, 26, .74) 30%,
+                                rgba(4, 22, 26, .34) 62%, rgba(4, 22, 26, .40) 100%),
+      linear-gradient(to right, rgba(4, 22, 26, .66), rgba(4, 22, 26, .06) 66%);
+  }
+
+  .hero__in {
+    position: relative;
+    z-index: 1;
+    padding-bottom: clamp(3rem, 9vw, 6.5rem);
+    padding-top: 7rem;
+  }
+
+  .hero__eyebrow {
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .82);
+    margin-bottom: var(--sp-4);
+  }
+
+  .hero__titlu {
+    font-size: var(--t-3xl);
+    font-weight: 500;
+    line-height: .95;
+    letter-spacing: -.03em;
+    font-variation-settings: 'SOFT' 18, 'WONK' 1, 'opsz' 144;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, .3);
+    max-width: 16ch;
+  }
+
+  .hero__sub {
+    margin-top: var(--sp-5);
+    max-width: 46ch;
+    font-size: var(--t-md);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, .9);
+    text-shadow: 0 1px 14px rgba(0, 0, 0, .35);
+  }
+
+  .stare {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    margin-top: var(--sp-5);
+    padding: .42rem .95rem .42rem .75rem;
+    border-radius: var(--r-full);
+    background: rgba(255, 255, 255, .13);
+    border: 1px solid rgba(255, 255, 255, .3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: var(--t-sm);
+    font-weight: 500;
+  }
+  .stare[hidden] { display: none; }
+  .stare__pt {
+    width: .5rem; height: .5rem;
+    border-radius: 50%;
+    background: #9AA8AA;
+    flex: none;
+  }
+  .stare.is-open .stare__pt {
+    background: #5BD98C;
+    box-shadow: 0 0 0 0 rgba(91, 217, 140, .7);
+    animation: puls 2.4s var(--ease) infinite;
+  }
+  @keyframes puls {
+    0%   { box-shadow: 0 0 0 0 rgba(91, 217, 140, .6); }
+    70%  { box-shadow: 0 0 0 8px rgba(91, 217, 140, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(91, 217, 140, 0); }
+  }
+
+  .hero__cta { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
+
+  /* Bara de date rapide, lipita de baza hero-ului. */
+  .hero__bar {
+    position: relative;
+    z-index: 1;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .bara {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-inline: 1px solid var(--line);
+  }
+  .bara__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'ic k' 'ic v';
+    align-items: center;
+    column-gap: .7rem;
+    padding: clamp(.85rem, 2.4vw, 1.3rem) clamp(.7rem, 2vw, 1.4rem);
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+  }
+  .bara__ic { grid-area: ic; color: var(--primary); }
+  .bara__k {
+    grid-area: k;
+    font-size: var(--t-xs);
+    color: var(--ink-3);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .bara__v {
+    grid-area: v;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .bara__item--link { transition: background-color .2s var(--ease); }
+  .bara__item--link:hover { background: var(--primary-soft); }
+  .bara__item--link:hover .bara__v { color: var(--primary); }
+
+  @media (min-width: 800px) {
+    .bara { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .bara__item { grid-template-areas: 'ic k' 'v v'; row-gap: .1rem; }
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+
+import { type Lang, t, localePath, LANGS } from '../content/i18n';
+import { CONTACT, LOCATIE, PROGRAM, PRETURI } from '../content/shared';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+const site = Astro.site ?? new URL('https://gradinatermala.ro');
+const canonical = new URL(localePath(lang), site).href;
+const ogImage = new URL('/og.jpg', site).href;
+
+const ZILE_SCHEMA = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const hhmm = (h: number) => `${String(h).padStart(2, '0')}:00`;
+
+// Comprima zilele cu acelasi interval intr-o singura intrare, cum cere schema.org.
+const grupuri = new Map<string, string[]>();
+PROGRAM.forEach((zi, i) => {
+  if (!zi) return;
+  const cheie = `${zi.deschis}-${zi.inchis}`;
+  grupuri.set(cheie, [...(grupuri.get(cheie) ?? []), ZILE_SCHEMA[i]]);
+});
+const openingHours = [...grupuri.entries()].map(([cheie, zile]) => {
+  const [d, i] = cheie.split('-').map(Number);
+  return {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: zile,
+    opens: hhmm(d),
+    closes: hhmm(i),
+  };
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'PublicSwimmingPool', 'TouristAttraction'],
+  '@id': `${site.origin}/#gradina-termala`,
+  name: lang === 'ro' ? 'Grădina Termală Dorobanți' : 'Termálkert Kisiratos',
+  alternateName: ['Grădina Termală', 'Ștrand Termal Dorobanți', 'Kisiratosi Termálfürdő'],
+  description: c.meta.descriere,
+  url: canonical,
+  image: ogImage,
+  telephone: CONTACT.telefonRaw,
+  email: CONTACT.email,
+  priceRange: `${PRETURI.copil}–${PRETURI.adult} RON`,
+  currenciesAccepted: 'RON',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: LOCATIE.localitate,
+    addressLocality: LOCATIE.localitate,
+    addressRegion: LOCATIE.judet,
+    postalCode: LOCATIE.codPostal,
+    addressCountry: 'RO',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: LOCATIE.lat, longitude: LOCATIE.lon },
+  hasMap: LOCATIE.googleMaps,
+  openingHoursSpecification: openingHours,
+  sameAs: [CONTACT.facebook, CONTACT.instagram],
+  amenityFeature: [
+    'Bazin cu apă termală', 'Bazin de înot', 'Bazin pentru copii', 'Restaurant',
+    'Bar', 'Camping', 'Parcare gratuită', 'Vestiare și dușuri', 'Teren de sport',
+  ].map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+  isAccessibleForFree: false,
+};
+---
+<!doctype html>
+<html lang={lang} data-theme-default>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.meta.titlu}</title>
+    <meta name="description" content={c.meta.descriere} />
+    <link rel="canonical" href={canonical} />
+
+    {LANGS.map((l) => (
+      <link rel="alternate" hreflang={l} href={new URL(localePath(l), site).href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'ro' ? 'ro_RO' : 'hu_HU'} />
+    <meta property="og:site_name" content="Grădina Termală" />
+    <meta property="og:title" content={c.meta.titlu} />
+    <meta property="og:description" content={c.meta.descriere} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={c.meta.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#F7F4EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#06161A" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="geo.position" content={`${LOCATIE.lat};${LOCATIE.lon}`} />
+    <meta name="geo.placename" content={`${LOCATIE.localitate}, ${LOCATIE.judet}`} />
+    <meta name="geo.region" content="RO-AR" />
+
+    {/* Tema se aplica inainte de prima pictura, ca sa nu palpaie la reincarcare. */}
+    <script is:inline>
+      try {
+        var s = localStorage.getItem('tema');
+        if (s === 'dark' || s === 'light') document.documentElement.dataset.theme = s;
+      } catch (e) {}
+    </script>
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#continut">{c.nav.sariLaContinut}</a>
+    <Header lang={lang} />
+    <main id="continut">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <script>
+      import '../scripts/app.ts';
+    </script>
+  </body>
+</html>

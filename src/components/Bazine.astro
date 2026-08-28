@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import { type Lang, t } from '../content/i18n';
+import Icon from './Icon.astro';
+import imgTratament from '../assets/photos/bazin-tratament.jpg';
+import imgInot from '../assets/photos/aerian-bazine.jpg';
+import imgCopii from '../assets/photos/aerian-termal.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+// Ordinea din JSON: tratament, inot, copii.
+const poze = [imgTratament, imgInot, imgCopii];
+const alturi = [
+  ['Oameni relaxându-se în bazinul de tratament, la apus', 'Fürdőzők a gyógymedencében, naplementében'],
+  ['Vedere aeriană a bazinului de înot de 30 de metri', 'Légi felvétel a 30 méteres úszómedencéről'],
+  ['Vedere aeriană a bazinelor cu apă termală', 'Légi felvétel a termálvizes medencékről'],
+];
+const li = lang === 'ro' ? 0 : 1;
+---
+<section class="section" id="bazine">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow">01</span>
+      <h2 class="section__title">{c.bazine.titlu}</h2>
+      <p class="section__intro">{c.bazine.intro}</p>
+    </div>
+
+    <ul class="baz">
+      {c.bazine.lista.map((b, i) => (
+        <li class="baz__c card" data-reveal style={`--reveal-delay:${i * 110}ms`}>
+          <div class="baz__media">
+            <Image
+              src={poze[i]}
+              alt={alturi[i][li]}
+              widths={[400, 700, 900]}
+              sizes="(min-width: 900px) 33vw, (min-width: 620px) 50vw, 100vw"
+              quality={80}
+              class="baz__img"
+            />
+            <span class="baz__temp">{b.temp}</span>
+          </div>
+          <div class="baz__body">
+            <h3 class="baz__nume">{b.nume}</h3>
+            <p class="baz__desc">{b.descriere}</p>
+            <p class="baz__pentru">
+              <Icon name="verificat" size={15} />
+              <span>{b.pentru}</span>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .baz {
+    display: grid;
+    gap: clamp(1.2rem, 3vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  }
+  .baz__c {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .baz__c:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+
+  .baz__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+  .baz__img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+  .baz__c:hover .baz__img { transform: scale(1.045); }
+
+  .baz__temp {
+    position: absolute;
+    left: var(--sp-4); bottom: var(--sp-4);
+    padding: .35rem .8rem;
+    border-radius: var(--r-full);
+    background: rgba(6, 22, 26, .58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .26);
+    color: #fff;
+    font-size: var(--t-sm);
+    font-weight: 700;
+    letter-spacing: .01em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .baz__body {
+    padding: clamp(1.2rem, 3vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    flex: 1;
+  }
+  .baz__nume { font-size: var(--t-lg); }
+  .baz__desc { color: var(--ink-2); font-size: var(--t-sm); line-height: 1.62; flex: 1; }
+  .baz__pentru {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+    color: var(--primary);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+</style>

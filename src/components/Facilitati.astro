@@ -1,0 +1,104 @@
+---
+import { Image } from 'astro:assets';
+import { type Lang, t } from '../content/i18n';
+import Icon from './Icon.astro';
+import imgGastro from '../assets/photos/gastronomie.jpg';
+import imgSport from '../assets/photos/sport.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang);
+
+// Aceeasi ordine ca lista din fisierele de continut.
+const ICOANE = ['restaurant', 'bar', 'cort', 'gratar', 'masaj', 'minge', 'dus', 'parcare', 'copac', 'muzica'] as const;
+
+const alt = {
+  gastro: lang === 'ro'
+    ? 'Kürtőskalács proaspăt, ținut în fața bazinului'
+    : 'Frissen sült kürtőskalács a medence előtt',
+  sport: lang === 'ro'
+    ? 'Tineri jucând fotbal pe gazonul din grădină'
+    : 'Fiatalok fociznak a kert gyepén',
+};
+---
+<section class="section" id="facilitati">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow">02</span>
+      <h2 class="section__title">{c.facilitati.titlu}</h2>
+      <p class="section__intro">{c.facilitati.intro}</p>
+    </div>
+
+    <div class="fac">
+      <ul class="fac__grid">
+        {c.facilitati.lista.map((f, i) => (
+          <li class="fac__i" data-reveal style={`--reveal-delay:${Math.min(i, 6) * 60}ms`}>
+            <span class="fac__ic"><Icon name={ICOANE[i]} size={21} /></span>
+            <span class="fac__t">
+              <strong>{f.nume}</strong>
+              <em>{f.descriere}</em>
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="fac__poze" data-reveal style="--reveal-delay:160ms">
+        <figure class="fac__f fac__f--a">
+          <Image src={imgGastro} alt={alt.gastro} widths={[380, 760]} sizes="(min-width:1000px) 24vw, 45vw" quality={80} />
+        </figure>
+        <figure class="fac__f fac__f--b">
+          <Image src={imgSport} alt={alt.sport} widths={[380, 760]} sizes="(min-width:1000px) 24vw, 45vw" quality={80} />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fac { display: grid; gap: clamp(2rem, 4vw, 3.5rem); }
+
+  .fac__grid {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+  .fac__i {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: clamp(1rem, 2.6vw, 1.35rem);
+    background: var(--surface);
+    transition: background-color .25s var(--ease);
+  }
+  .fac__i:hover { background: var(--primary-soft); }
+
+  .fac__ic {
+    display: grid;
+    place-items: center;
+    width: 2.4rem; height: 2.4rem;
+    flex: none;
+    border-radius: var(--r-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .fac__t { display: grid; gap: .15rem; min-width: 0; }
+  .fac__t strong { font-size: var(--t-sm); font-weight: 650; line-height: 1.35; }
+  .fac__t em { font-style: normal; font-size: var(--t-xs); color: var(--ink-3); line-height: 1.45; }
+
+  .fac__poze { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.5vw, 1.5rem); }
+  .fac__f { margin: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .fac__f :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .fac__f--a :global(img) { aspect-ratio: 4 / 5; }
+  .fac__f--b :global(img) { aspect-ratio: 4 / 5; }
+
+  @media (min-width: 1000px) {
+    .fac { grid-template-columns: 1fr 0.62fr; align-items: start; }
+    .fac__poze { grid-template-columns: 1fr; }
+    .fac__f--a :global(img) { aspect-ratio: 4 / 3; }
+    .fac__f--b :global(img) { aspect-ratio: 4 / 3; }
+  }
+</style>
