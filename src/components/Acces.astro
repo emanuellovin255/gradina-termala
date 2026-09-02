@@ -34,11 +34,11 @@ const localitate = lang === 'ro' ? LOCATIE.localitate : LOCATIE.localitateHu;
             <span class="acc__v acc__v--mono">{LOCATIE.lat}, {LOCATIE.lon}</span>
           </div>
           <div class="acc__btns">
-            <a class="btn btn--primary" href={LOCATIE.googleMaps} target="_blank" rel="noopener">
+            <a class="btn btn--primary" href={LOCATIE.googleMaps} target="_blank" rel="noopener noreferrer">
               <Icon name="pin" size={16} class="btn__icon" />
               <span>{c.acces.navigheaza}</span>
             </a>
-            <a class="btn btn--ghost" href={LOCATIE.waze} target="_blank" rel="noopener">
+            <a class="btn btn--ghost" href={LOCATIE.waze} target="_blank" rel="noopener noreferrer">
               <Icon name="sageata" size={16} class="btn__icon" />
               <span>{c.acces.wazeBtn}</span>
             </a>
