@@ -16,15 +16,16 @@ npm run preview  # verifica build-ul local
 
 | Vrei să schimbi | Fișier |
 |---|---|
-| Preț, program, telefon, GPS, temperaturi | `src/content/shared.ts` |
+| Preț, program, telefon, GPS, temperaturi | `src/content/date.json` (sau panoul de la `/admin`) |
 | Orice text în română | `src/content/ro.json` |
 | Orice text în maghiară | `src/content/hu.json` |
 | Fotografii | `src/assets/photos/` (păstrează numele fișierelor) |
 | Culori, tipografie, spațieri | `src/styles/tokens.css` |
 
-Prețurile și programul se scriu **o singură dată**, în `shared.ts`, și apar automat
+Prețurile și programul se scriu **o singură dată**, în `date.json`, și apar automat
 peste tot: în bara de sus, în tabelul de prețuri, în programul pe zile și în datele
-structurate pe care le citește Google.
+structurate pe care le citește Google. `shared.ts` doar tipează valorile și derivă din
+coordonate linkurile de Google Maps, Waze și harta încorporată.
 
 Cele două fișiere de traducere au aceleași chei. Dacă adaugi ceva în `ro.json`,
 adaugă-l și în `hu.json`, altfel textul lipsește din versiunea maghiară.
@@ -33,15 +34,48 @@ adaugă-l și în `hu.json`, altfel textul lipsește din versiunea maghiară.
 
 ```
 src/
-  content/   shared.ts (date), ro.json, hu.json (texte), i18n.ts
+  content/   date.json (valori), shared.ts (tipuri + derivate),
+             ro.json, hu.json (texte), i18n.ts
   components/ Header, Hero, Bazine, ApaTermala, Facilitati,
               Preturi, Program, Galerie, Acces, Contact, Footer, Icon
   layouts/   Base.astro — <head>, SEO, JSON-LD
-  pages/     index.astro (RO, la /), hu/index.astro (HU, la /hu/)
+  pages/     index.astro (RO, la /), hu/index.astro (HU, la /hu/),
+             admin.astro (panoul de administrare, la /admin)
   scripts/   app.ts — meniu, temă, deschis/închis, galerie, reveal
-  styles/    tokens.css, global.css
+             admin.ts — panoul de administrare
+  styles/    tokens.css, global.css, admin.css
   assets/photos/
+middleware.ts               parola pentru /admin pe Vercel
+netlify/edge-functions/     parola pentru /admin pe Netlify
 ```
+
+## Panoul de administrare
+
+La `/admin`. Editezi programul, prețurile, temperaturile, contactul, coordonatele,
+orarul autobuzului și textele care se schimbă de la un sezon la altul — în ambele limbi,
+fără să umbli în cod.
+
+Site-ul e static, deci panoul **nu scrie pe server**. Modifici, vezi ce s-a schimbat,
+descarci fișierele, le pui peste cele din `src/content/` și dai push. Ciorna se ține în
+`localStorage`, deci nu se pierde dacă închizi tabul.
+
+### Parola
+
+Se pune din variabilele de mediu ale hostingului, nu în cod:
+
+| Variabilă | Rol |
+|---|---|
+| `ADMIN_PAROLA` | parola. **Obligatorie** — fără ea, `/admin` răspunde 404 |
+| `ADMIN_USER` | utilizatorul. Opțional, implicit `admin` |
+
+Pe Vercel: *Settings → Environment Variables*. Pe Netlify: *Site configuration →
+Environment variables*. Apoi un redeploy, ca variabila să ajungă în build.
+
+Verificarea se face la margine, înainte de servirea fișierului
+(`middleware.ts` pentru Vercel, `netlify/edge-functions/admin-auth.ts` pentru Netlify),
+prin HTTP Basic Auth: browserul cere singur user și parolă.
+
+Local, la `npm run dev`, panoul e deschis fără parolă.
 
 ## Detalii care contează
 
@@ -50,7 +84,7 @@ nu pe cel al vizitatorului — cine deschide site-ul din Ungaria vede ora corect
 
 **Datele structurate** (`JSON-LD`, tip `LocalBusiness` + `PublicSwimmingPool`) conțin
 adresa, coordonatele, telefonul, programul și intervalul de preț. Astea sunt citite de
-Google și de asistenții AI. Dacă se schimbă programul sau prețul în `shared.ts`,
+Google și de asistenții AI. Dacă se schimbă programul sau prețul în `date.json`,
 se actualizează automat și aici.
 
 **Fonturile** sunt găzduite local (`@fontsource-variable`), nu de la Google — pagina nu

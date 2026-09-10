@@ -1,0 +1,48 @@
+{
+  "contact": {
+    "telefon": "0726 671 972",
+    "telefonRaw": "+40726671972",
+    "email": "dorobanti2014@gmail.com",
+    "facebook": "https://www.facebook.com/Gradina.Termala/",
+    "instagram": "https://www.instagram.com/gradina.termala/",
+    "whatsapp": "https://wa.me/40726671972"
+  },
+  "locatie": {
+    "localitate": "Dorobanți",
+    "localitateHu": "Kisiratos",
+    "judet": "Arad",
+    "tara": "România",
+    "codPostal": "315201",
+    "lat": 46.350867,
+    "lon": 21.246982
+  },
+  "program": [
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 },
+    { "deschis": 12, "inchis": 22 }
+  ],
+  "preturi": {
+    "adult": 35,
+    "pensionar": 25,
+    "copil": 15,
+    "sezlong": 15,
+    "moneda": "lei"
+  },
+  "apa": {
+    "sursa": 55,
+    "tratamentMin": 36,
+    "tratamentMax": 40,
+    "copiiMin": 32,
+    "copiiMax": 36
+  },
+  "bazinInot": { "lungime": 30, "latime": 10, "adancimeMax": 2 },
+  "suprafataHa": 1.5,
+  "autobuz": {
+    "spre": ["08:45", "15:40", "17:25"],
+    "dinspre": ["05:30", "10:00", "18:30"]
+  }
+}

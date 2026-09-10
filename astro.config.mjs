@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://gradinatermala.ro',
-  integrations: [sitemap()],
+  // Panoul de administrare e o unealta interna: nu are ce cauta in sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin') })],
   i18n: {
     defaultLocale: 'ro',
     locales: ['ro', 'hu'],

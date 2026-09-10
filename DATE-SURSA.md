@@ -39,7 +39,7 @@ Locul unde se modifică efectiv în cod:
 
 ## Program
 
-Luni 12:00–23:00 · Marți–Duminică 10:00–23:00
+Zilnic 12:00–22:00 — se schimbă din panoul de la `/admin`
 Sezon: aprilie – noiembrie ⚠️ *datele exacte nu sunt publicate*
 
 ## Prețuri ⚠️ de confirmat

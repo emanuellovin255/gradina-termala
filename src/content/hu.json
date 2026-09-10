@@ -3,7 +3,7 @@
   "langNume": "Magyar",
   "meta": {
     "titlu": "Termálkert Kisiratos — termálfürdő Arad mellett",
-    "descriere": "Termálfürdő Kisiratoson, 22 km-re Aradtól. Három medence 55 °C-os forrásvízből, másfél hektáros kert, étterem és kemping. Naponta nyitva 23:00-ig.",
+    "descriere": "Termálfürdő Kisiratoson, 22 km-re Aradtól. Három medence 55 °C-os forrásvízből, másfél hektáros kert, étterem és kemping. Naponta 12:00–22:00 között nyitva.",
     "ogAlt": "Légi felvétel a kisiratosi Termálkert medencéiről"
   },
   "nav": {
@@ -20,7 +20,7 @@
   "hero": {
     "supratitlu": "Kisiratos · Arad megye",
     "titlu": "Termálkert",
-    "subtitlu": "55 °C-os termálvíz egy másfél hektáros kertben. Huszonkét kilométerre Aradtól, este tizenegyig nyitva.",
+    "subtitlu": "55 °C-os termálvíz egy másfél hektáros kertben. Huszonkét kilométerre Aradtól, naponta déltől este tízig nyitva.",
     "ctaPrimar": "Hívjon: {telefon}",
     "ctaSecundar": "Megközelítés",
     "deschisAcum": "Most nyitva",
@@ -103,7 +103,7 @@
   },
   "program": {
     "titlu": "Nyitvatartás",
-    "intro": "Szezonban a hét minden napján nyitva. Hétfőn később kezdünk, a medencék karbantartása miatt.",
+    "intro": "Szezonban a hét minden napján nyitva, minden nap ugyanabban az időben: 12:00–22:00.",
     "zile": ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
     "zileScurt": ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
     "inchis": "Zárva",

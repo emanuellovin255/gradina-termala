@@ -3,7 +3,7 @@
   "langNume": "Română",
   "meta": {
     "titlu": "Grădina Termală Dorobanți — ștrand cu apă termală lângă Arad",
-    "descriere": "Ștrand termal în Dorobanți, la 22 km de Arad. Trei bazine cu apă de izvor de 55 °C, 1,5 hectare de grădină, restaurant și camping. Deschis până la 23:00.",
+    "descriere": "Ștrand termal în Dorobanți, la 22 km de Arad. Trei bazine cu apă de izvor de 55 °C, 1,5 hectare de grădină, restaurant și camping. Deschis zilnic 12:00–22:00.",
     "ogAlt": "Vedere aeriană a bazinelor de la Grădina Termală Dorobanți"
   },
   "nav": {
@@ -20,7 +20,7 @@
   "hero": {
     "supratitlu": "Dorobanți · județul Arad",
     "titlu": "Grădina Termală",
-    "subtitlu": "Apă termală de izvor, la 55 °C, într-o grădină de un hectar și jumătate. La 22 de kilometri de Arad și deschisă până la 11 seara.",
+    "subtitlu": "Apă termală de izvor, la 55 °C, într-o grădină de un hectar și jumătate. La 22 de kilometri de Arad și deschisă zilnic între 12 și 10 seara.",
     "ctaPrimar": "Sună la {telefon}",
     "ctaSecundar": "Cum ajungi",
     "deschisAcum": "Deschis acum",
@@ -103,7 +103,7 @@
   },
   "program": {
     "titlu": "Program",
-    "intro": "Deschis șapte zile pe săptămână în sezon. Lunea începem mai târziu, pentru întreținerea bazinelor.",
+    "intro": "Deschis șapte zile pe săptămână în sezon, cu același program în fiecare zi: 12:00–22:00.",
     "zile": ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
     "zileScurt": ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
     "inchis": "Închis",

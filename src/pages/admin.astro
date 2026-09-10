@@ -1,0 +1,419 @@
+---
+// Panou de administrare a continutului. Ruleaza integral in browser: citeste
+// valorile curente injectate la build, le lasa editate si genereaza inapoi
+// fisierele din src/content. Nu salveaza nimic pe server — site-ul e static.
+import date from '../content/date.json';
+import ro from '../content/ro.json';
+import hu from '../content/hu.json';
+import '../styles/global.css';
+import '../styles/admin.css';
+
+// Textele scoase la editare. Restul raman in JSON, unde se schimba rar.
+const TEXTE: { grup: string; campuri: { cale: string; eticheta: string; lung?: boolean }[] }[] = [
+  {
+    grup: 'Meta și SEO',
+    campuri: [
+      { cale: 'meta.titlu', eticheta: 'Titlu pagină' },
+      { cale: 'meta.descriere', eticheta: 'Descriere (meta description)', lung: true },
+    ],
+  },
+  {
+    grup: 'Hero',
+    campuri: [
+      { cale: 'hero.supratitlu', eticheta: 'Supratitlu' },
+      { cale: 'hero.titlu', eticheta: 'Titlu' },
+      { cale: 'hero.subtitlu', eticheta: 'Subtitlu', lung: true },
+    ],
+  },
+  {
+    grup: 'Program',
+    campuri: [
+      { cale: 'program.intro', eticheta: 'Intro', lung: true },
+      { cale: 'program.sezon', eticheta: 'Eticheta de sezon' },
+      { cale: 'program.sezonNota', eticheta: 'Notă sezon', lung: true },
+    ],
+  },
+  {
+    grup: 'Prețuri',
+    campuri: [
+      { cale: 'preturi.intro', eticheta: 'Intro', lung: true },
+      { cale: 'preturi.nota', eticheta: 'Notă', lung: true },
+      { cale: 'preturi.inclus', eticheta: 'Etichetă „inclus”' },
+    ],
+  },
+  {
+    grup: 'Acces',
+    campuri: [
+      { cale: 'acces.autobuzIntro', eticheta: 'Intro autobuz', lung: true },
+      { cale: 'acces.autobuzNota', eticheta: 'Notă orar autobuz', lung: true },
+    ],
+  },
+  {
+    grup: 'Contact',
+    campuri: [
+      { cale: 'contact.intro', eticheta: 'Intro', lung: true },
+      { cale: 'contact.urmareste', eticheta: 'Îndemn Facebook', lung: true },
+    ],
+  },
+];
+
+// Luni prima, cum se citeste saptamana.
+const ORDINE = [1, 2, 3, 4, 5, 6, 0];
+const ZILE = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+const ORE = Array.from({ length: 25 }, (_, h) => h);
+
+const TABURI = [
+  { id: 'program', nume: 'Program', icon: '🕒' },
+  { id: 'preturi', nume: 'Prețuri', icon: '🎟️' },
+  { id: 'apa', nume: 'Apă și bazine', icon: '💧' },
+  { id: 'contact', nume: 'Contact', icon: '📞' },
+  { id: 'locatie', nume: 'Locație', icon: '📍' },
+  { id: 'autobuz', nume: 'Autobuz', icon: '🚌' },
+  { id: 'texte', nume: 'Texte', icon: '✍️' },
+  { id: 'publica', nume: 'Publică', icon: '🚀' },
+];
+
+const initial = { date, ro, hu };
+---
+
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panou de administrare — Grădina Termală</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      try {
+        var s = localStorage.getItem('tema');
+        if (s === 'dark' || s === 'light') document.documentElement.dataset.theme = s;
+      } catch (e) {}
+    </script>
+    <script type="application/json" id="ad-initial" is:inline set:html={JSON.stringify(initial)} />
+  </head>
+
+  <body class="ad">
+    <header class="ad__bar">
+      <div class="ad__brand">
+        <span class="ad__logo" aria-hidden="true">GT</span>
+        <div>
+          <strong>Panou de administrare</strong>
+          <span class="ad__brandSub">Grădina Termală Dorobanți</span>
+        </div>
+      </div>
+
+      <div class="ad__barActions">
+        <span class="ad__stare" id="ad-stare" data-dirty="false">Fără modificări</span>
+        <button class="btn btn--ghost btn--sm" type="button" id="ad-reset">Resetează tot</button>
+        <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Vezi site-ul</a>
+        <button class="btn btn--primary btn--sm" type="button" data-tab-jump="publica">Publică</button>
+      </div>
+    </header>
+
+    <div class="ad__body">
+      <nav class="ad__nav" aria-label="Secțiuni">
+        {TABURI.map((tb, i) => (
+          <button
+            class:list={['ad__navBtn', i === 0 && 'is-active']}
+            type="button"
+            data-tab={tb.id}
+            aria-current={i === 0 ? 'true' : 'false'}
+          >
+            <span class="ad__navIcon" aria-hidden="true">{tb.icon}</span>
+            <span>{tb.nume}</span>
+            <span class="ad__navDot" data-dot={tb.id} hidden aria-label="are modificări"></span>
+          </button>
+        ))}
+      </nav>
+
+      <main class="ad__main">
+        <!-- ---------------- PROGRAM ---------------- -->
+        <section class="ad__panou" data-panou="program">
+          <div class="ad__head">
+            <h1>Program</h1>
+            <p>Orele de deschidere pe zile. Se propagă în tabelul de program, în bara de sus, în starea „deschis acum” și în datele structurate pentru Google.</p>
+          </div>
+
+          <div class="ad__previewCard card">
+            <span class="ad__previewEt">Previzualizare, chiar acum</span>
+            <div class="ad__previewRow">
+              <span class="ad__badge" id="ad-badge">—</span>
+              <span class="ad__previewOre" id="ad-preview-azi">—</span>
+            </div>
+          </div>
+
+          <div class="card ad__card">
+            <div class="ad__quick">
+              <span class="ad__quickEt">Aplică pe toate zilele</span>
+              <select class="ad__sel" id="ad-bulk-open" aria-label="Oră deschidere, toate zilele">
+                {ORE.slice(0, 24).map((h) => <option value={h}>{String(h).padStart(2, '0')}:00</option>)}
+              </select>
+              <span class="ad__sep">–</span>
+              <select class="ad__sel" id="ad-bulk-close" aria-label="Oră închidere, toate zilele">
+                {ORE.map((h) => <option value={h}>{String(h).padStart(2, '0')}:00</option>)}
+              </select>
+              <button class="btn btn--ghost btn--sm" type="button" id="ad-bulk-apply">Aplică</button>
+            </div>
+
+            <ul class="ad__zile">
+              {ORDINE.map((zi) => (
+                <li class="ad__zi" data-zi={zi}>
+                  <span class="ad__ziNume">{ZILE[zi]}</span>
+                  <div class="ad__ziOre">
+                    <select class="ad__sel" data-zi-open={zi} aria-label={`Oră deschidere ${ZILE[zi]}`}>
+                      {ORE.slice(0, 24).map((h) => <option value={h}>{String(h).padStart(2, '0')}:00</option>)}
+                    </select>
+                    <span class="ad__sep">–</span>
+                    <select class="ad__sel" data-zi-close={zi} aria-label={`Oră închidere ${ZILE[zi]}`}>
+                      {ORE.map((h) => <option value={h}>{String(h).padStart(2, '0')}:00</option>)}
+                    </select>
+                  </div>
+                  <label class="ad__check">
+                    <input type="checkbox" data-zi-inchis={zi} />
+                    <span>Închis</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p class="ad__nota">Închiderea la <strong>24:00</strong> înseamnă miezul nopții. Ziua marcată „Închis” dispare complet din program și din datele pentru Google.</p>
+        </section>
+
+        <!-- ---------------- PRETURI ---------------- -->
+        <section class="ad__panou" data-panou="preturi" hidden>
+          <div class="ad__head">
+            <h1>Prețuri</h1>
+            <p>Valorile din tabelul de prețuri și din bara de sus. Intervalul copil–adult ajunge și în datele structurate ca <code>priceRange</code>.</p>
+          </div>
+
+          <div class="card ad__card ad__grid2">
+            <label class="ad__f"><span>Adult</span>
+              <div class="ad__inputUnit"><input type="number" min="0" step="1" data-store="date" data-path="preturi.adult" /><span class="ad__unit" data-moneda>lei</span></div>
+            </label>
+            <label class="ad__f"><span>Pensionar</span>
+              <div class="ad__inputUnit"><input type="number" min="0" step="1" data-store="date" data-path="preturi.pensionar" /><span class="ad__unit" data-moneda>lei</span></div>
+            </label>
+            <label class="ad__f"><span>Copil</span>
+              <div class="ad__inputUnit"><input type="number" min="0" step="1" data-store="date" data-path="preturi.copil" /><span class="ad__unit" data-moneda>lei</span></div>
+            </label>
+            <label class="ad__f"><span>Șezlong</span>
+              <div class="ad__inputUnit"><input type="number" min="0" step="1" data-store="date" data-path="preturi.sezlong" /><span class="ad__unit" data-moneda>lei</span></div>
+            </label>
+            <label class="ad__f"><span>Monedă</span>
+              <input type="text" data-store="date" data-path="preturi.moneda" />
+            </label>
+          </div>
+        </section>
+
+        <!-- ---------------- APA ---------------- -->
+        <section class="ad__panou" data-panou="apa" hidden>
+          <div class="ad__head">
+            <h1>Apă și bazine</h1>
+            <p>Temperaturile și dimensiunile afișate în secțiunea despre izvor, pe cardurile de bazine și în bara de sus.</p>
+          </div>
+
+          <div class="card ad__card">
+            <h2 class="ad__sub">Temperaturi</h2>
+            <div class="ad__grid2">
+              <label class="ad__f"><span>La sursă</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="apa.sursa" /><span class="ad__unit">°C</span></div>
+              </label>
+              <div></div>
+              <label class="ad__f"><span>Bazin tratament, minim</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="apa.tratamentMin" /><span class="ad__unit">°C</span></div>
+              </label>
+              <label class="ad__f"><span>Bazin tratament, maxim</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="apa.tratamentMax" /><span class="ad__unit">°C</span></div>
+              </label>
+              <label class="ad__f"><span>Bazin copii, minim</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="apa.copiiMin" /><span class="ad__unit">°C</span></div>
+              </label>
+              <label class="ad__f"><span>Bazin copii, maxim</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="apa.copiiMax" /><span class="ad__unit">°C</span></div>
+              </label>
+            </div>
+          </div>
+
+          <div class="card ad__card">
+            <h2 class="ad__sub">Bazinul de înot și grădina</h2>
+            <div class="ad__grid2">
+              <label class="ad__f"><span>Lungime</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="bazinInot.lungime" /><span class="ad__unit">m</span></div>
+              </label>
+              <label class="ad__f"><span>Lățime</span>
+                <div class="ad__inputUnit"><input type="number" step="1" data-store="date" data-path="bazinInot.latime" /><span class="ad__unit">m</span></div>
+              </label>
+              <label class="ad__f"><span>Adâncime maximă</span>
+                <div class="ad__inputUnit"><input type="number" step="0.1" data-store="date" data-path="bazinInot.adancimeMax" /><span class="ad__unit">m</span></div>
+              </label>
+              <label class="ad__f"><span>Suprafața grădinii</span>
+                <div class="ad__inputUnit"><input type="number" step="0.1" data-store="date" data-path="suprafataHa" /><span class="ad__unit">ha</span></div>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------------- CONTACT ---------------- -->
+        <section class="ad__panou" data-panou="contact" hidden>
+          <div class="ad__head">
+            <h1>Contact</h1>
+            <p>Apar în header, în bara de sus, în secțiunea de contact, în footer și în datele structurate.</p>
+          </div>
+
+          <div class="card ad__card ad__grid2">
+            <label class="ad__f"><span>Telefon, cum se afișează</span>
+              <input type="text" data-store="date" data-path="contact.telefon" placeholder="0726 671 972" />
+            </label>
+            <label class="ad__f"><span>Telefon, format internațional</span>
+              <input type="text" data-store="date" data-path="contact.telefonRaw" placeholder="+40726671972" />
+              <em class="ad__hint">Folosit în linkurile <code>tel:</code>. Fără spații.</em>
+            </label>
+            <label class="ad__f ad__f--wide"><span>Email</span>
+              <input type="email" data-store="date" data-path="contact.email" />
+            </label>
+            <label class="ad__f ad__f--wide"><span>Facebook</span>
+              <input type="url" data-store="date" data-path="contact.facebook" />
+            </label>
+            <label class="ad__f ad__f--wide"><span>Instagram</span>
+              <input type="url" data-store="date" data-path="contact.instagram" />
+            </label>
+            <label class="ad__f ad__f--wide"><span>WhatsApp</span>
+              <input type="url" data-store="date" data-path="contact.whatsapp" />
+            </label>
+          </div>
+        </section>
+
+        <!-- ---------------- LOCATIE ---------------- -->
+        <section class="ad__panou" data-panou="locatie" hidden>
+          <div class="ad__head">
+            <h1>Locație</h1>
+            <p>Din coordonate se generează automat linkurile de Google Maps, Waze și harta încorporată. Nu trebuie schimbate separat.</p>
+          </div>
+
+          <div class="card ad__card ad__grid2">
+            <label class="ad__f"><span>Localitate (RO)</span>
+              <input type="text" data-store="date" data-path="locatie.localitate" />
+            </label>
+            <label class="ad__f"><span>Localitate (HU)</span>
+              <input type="text" data-store="date" data-path="locatie.localitateHu" />
+            </label>
+            <label class="ad__f"><span>Județ</span>
+              <input type="text" data-store="date" data-path="locatie.judet" />
+            </label>
+            <label class="ad__f"><span>Țară</span>
+              <input type="text" data-store="date" data-path="locatie.tara" />
+            </label>
+            <label class="ad__f"><span>Cod poștal</span>
+              <input type="text" data-store="date" data-path="locatie.codPostal" />
+            </label>
+            <div></div>
+            <label class="ad__f"><span>Latitudine</span>
+              <input type="number" step="0.000001" data-store="date" data-path="locatie.lat" />
+            </label>
+            <label class="ad__f"><span>Longitudine</span>
+              <input type="number" step="0.000001" data-store="date" data-path="locatie.lon" />
+            </label>
+          </div>
+
+          <div class="card ad__card">
+            <h2 class="ad__sub">Linkuri generate</h2>
+            <ul class="ad__derivate">
+              <li><span>Google Maps</span><a id="ad-lnk-gmaps" href="#" target="_blank" rel="noopener noreferrer">—</a></li>
+              <li><span>Waze</span><a id="ad-lnk-waze" href="#" target="_blank" rel="noopener noreferrer">—</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ---------------- AUTOBUZ ---------------- -->
+        <section class="ad__panou" data-panou="autobuz" hidden>
+          <div class="ad__head">
+            <h1>Autobuz</h1>
+            <p>Orele cursei CTP Arad, afișate în secțiunea „Cum ajungi”. Format <code>HH:MM</code>.</p>
+          </div>
+
+          <div class="ad__grid2 ad__grid2--gap">
+            <div class="card ad__card">
+              <h2 class="ad__sub">Arad → Dorobanți</h2>
+              <ul class="ad__ore" data-lista="spre"></ul>
+              <button class="btn btn--ghost btn--sm" type="button" data-add="spre">+ Adaugă oră</button>
+            </div>
+            <div class="card ad__card">
+              <h2 class="ad__sub">Dorobanți → Arad</h2>
+              <ul class="ad__ore" data-lista="dinspre"></ul>
+              <button class="btn btn--ghost btn--sm" type="button" data-add="dinspre">+ Adaugă oră</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------------- TEXTE ---------------- -->
+        <section class="ad__panou" data-panou="texte" hidden>
+          <div class="ad__head">
+            <h1>Texte</h1>
+            <p>Textele care se schimbă de la un sezon la altul, în ambele limbi. Acoladele — <code>{'{telefon}'}</code>, <code>{'{ora}'}</code> — se înlocuiesc automat, lasă-le pe loc.</p>
+          </div>
+
+          {TEXTE.map((g) => (
+            <div class="card ad__card">
+              <h2 class="ad__sub">{g.grup}</h2>
+              {g.campuri.map((c) => (
+                <div class="ad__text">
+                  <span class="ad__textEt">{c.eticheta}</span>
+                  <div class="ad__textPereche">
+                    <label class="ad__f">
+                      <span class="ad__lang">Română</span>
+                      {c.lung
+                        ? <textarea rows="3" data-store="ro" data-path={c.cale}></textarea>
+                        : <input type="text" data-store="ro" data-path={c.cale} />}
+                    </label>
+                    <label class="ad__f">
+                      <span class="ad__lang">Magyar</span>
+                      {c.lung
+                        ? <textarea rows="3" data-store="hu" data-path={c.cale}></textarea>
+                        : <input type="text" data-store="hu" data-path={c.cale} />}
+                    </label>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </section>
+
+        <!-- ---------------- PUBLICA ---------------- -->
+        <section class="ad__panou" data-panou="publica" hidden>
+          <div class="ad__head">
+            <h1>Publică modificările</h1>
+            <p>Site-ul e static, deci panoul nu scrie direct pe server. Descarci fișierele modificate, le pui peste cele din <code>src/content/</code> și dai push — se reconstruiește singur.</p>
+          </div>
+
+          <div class="card ad__card">
+            <h2 class="ad__sub">Ce s-a schimbat</h2>
+            <ul class="ad__diff" id="ad-diff"><li class="ad__diffGol">Nimic încă.</li></ul>
+          </div>
+
+          <div class="card ad__card">
+            <h2 class="ad__sub">Fișiere</h2>
+            <ul class="ad__fisiere" id="ad-fisiere"></ul>
+            <div class="ad__fisiereBtns">
+              <button class="btn btn--primary btn--sm" type="button" id="ad-dl-all">Descarcă tot ce s-a schimbat</button>
+            </div>
+          </div>
+
+          <ol class="card ad__card ad__pasi">
+            <h2 class="ad__sub">Pașii</h2>
+            <li>Descarcă fișierele de mai sus.</li>
+            <li>Le copiezi peste cele cu același nume din <code>src/content/</code>.</li>
+            <li><code>git add src/content &amp;&amp; git commit -m "Actualizare conținut" &amp;&amp; git push</code></li>
+            <li>Deploy-ul pornește singur. În ~1 minut modificările sunt pe gradinatermala.ro.</li>
+          </ol>
+        </section>
+      </main>
+    </div>
+
+    <div class="ad__toast" id="ad-toast" role="status" aria-live="polite" hidden></div>
+
+    <script>
+      import '../scripts/admin.ts';
+    </script>
+  </body>
+</html>
