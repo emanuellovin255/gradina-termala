@@ -3,7 +3,7 @@
   "langNume": "Magyar",
   "meta": {
     "titlu": "Termálkert Kisiratos — termálfürdő Arad mellett",
-    "descriere": "Termálfürdő Kisiratoson, 22 km-re Aradtól. Három medence 55 °C-os forrásvízből, másfél hektáros kert, étterem és kemping. Naponta 12:00–22:00 között nyitva.",
+    "descriere": "Termálfürdő Kisiratoson, 22 km-re Aradtól. Három medence 55 °C-os forrásvízből, másfél hektáros kert, étterem és kemping. Jelenleg zárva — nyitás: 2027. április 1.",
     "ogAlt": "Légi felvétel a kisiratosi Termálkert medencéiről"
   },
   "nav": {
@@ -20,11 +20,11 @@
   "hero": {
     "supratitlu": "Kisiratos · Arad megye",
     "titlu": "Termálkert",
-    "subtitlu": "55 °C-os termálvíz egy másfél hektáros kertben. Huszonkét kilométerre Aradtól, naponta déltől este tízig nyitva.",
+    "subtitlu": "55 °C-os termálvíz egy másfél hektáros kertben. Huszonkét kilométerre Aradtól. Jelenleg zárva — nyitás: 2027. április 1.",
     "ctaPrimar": "Hívjon: {telefon}",
     "ctaSecundar": "Megközelítés",
     "deschisAcum": "Most nyitva",
-    "inchisAcum": "Most zárva",
+    "inchisAcum": "Zárva · nyitás: 2027. április 1.",
     "panaLa": "{ora}-ig",
     "deschideLa": "nyitás: {zi} {ora}",
     "maine": "holnap"
@@ -103,12 +103,12 @@
   },
   "program": {
     "titlu": "Nyitvatartás",
-    "intro": "Szezonban a hét minden napján nyitva, minden nap ugyanabban az időben: 12:00–22:00.",
+    "intro": "A fürdő jelenleg zárva tart. Nyitás: 2027. április 1.",
     "zile": ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
     "zileScurt": ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
     "inchis": "Zárva",
     "azi": "ma",
-    "sezon": "Szezon: április – november",
+    "sezon": "Nyitás: 2027. április 1.",
     "sezonNota": "A pontos nyitási és zárási dátumot minden évben a Facebook-oldalunkon jelentjük be."
   },
   "galerie": {

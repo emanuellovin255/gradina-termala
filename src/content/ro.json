@@ -3,7 +3,7 @@
   "langNume": "Română",
   "meta": {
     "titlu": "Grădina Termală Dorobanți — ștrand cu apă termală lângă Arad",
-    "descriere": "Ștrand termal în Dorobanți, la 22 km de Arad. Trei bazine cu apă de izvor de 55 °C, 1,5 hectare de grădină, restaurant și camping. Deschis zilnic 12:00–22:00.",
+    "descriere": "Ștrand termal în Dorobanți, la 22 km de Arad. Trei bazine cu apă de izvor de 55 °C, 1,5 hectare de grădină, restaurant și camping. Închis momentan — se deschide pe 1 aprilie 2027.",
     "ogAlt": "Vedere aeriană a bazinelor de la Grădina Termală Dorobanți"
   },
   "nav": {
@@ -20,11 +20,11 @@
   "hero": {
     "supratitlu": "Dorobanți · județul Arad",
     "titlu": "Grădina Termală",
-    "subtitlu": "Apă termală de izvor, la 55 °C, într-o grădină de un hectar și jumătate. La 22 de kilometri de Arad și deschisă zilnic între 12 și 10 seara.",
+    "subtitlu": "Apă termală de izvor, la 55 °C, într-o grădină de un hectar și jumătate. La 22 de kilometri de Arad. Închis momentan — se deschide pe 1 aprilie 2027.",
     "ctaPrimar": "Sună la {telefon}",
     "ctaSecundar": "Cum ajungi",
     "deschisAcum": "Deschis acum",
-    "inchisAcum": "Închis acum",
+    "inchisAcum": "Închis · se deschide pe 1 aprilie 2027",
     "panaLa": "până la {ora}",
     "deschideLa": "deschide {zi} la {ora}",
     "maine": "mâine"
@@ -103,12 +103,12 @@
   },
   "program": {
     "titlu": "Program",
-    "intro": "Deschis șapte zile pe săptămână în sezon, cu același program în fiecare zi: 12:00–22:00.",
+    "intro": "Ștrandul este închis momentan. Se deschide pe 1 aprilie 2027.",
     "zile": ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
     "zileScurt": ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
     "inchis": "Închis",
     "azi": "azi",
-    "sezon": "Sezon: aprilie – noiembrie",
+    "sezon": "Se deschide pe 1 aprilie 2027",
     "sezonNota": "Datele exacte de deschidere și închidere se anunță în fiecare an pe Facebook."
   },
   "galerie": {

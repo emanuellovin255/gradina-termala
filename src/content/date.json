@@ -17,13 +17,13 @@
     "lon": 21.246982
   },
   "program": [
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 },
-    { "deschis": 12, "inchis": 22 }
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
   ],
   "preturi": {
     "adult": 35,
